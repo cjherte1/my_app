@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Application'),
         centerTitle: true,
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.blue,
       ),
       body: Column(
         children: <Widget>[
