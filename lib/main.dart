@@ -32,7 +32,7 @@ class Home extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter your username'
+                hintText: 'Enter your password'
               ),
             ),
           ),
