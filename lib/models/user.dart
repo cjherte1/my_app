@@ -27,8 +27,26 @@ class User {
   //remove task given the name
   deleteTasks(String name) => tasks.removeWhere((item) => item.name == name);
 
+  Map<String, dynamic> toMap(){
+    return {
+      'firstname': firstName,
+      'lastname': lastName,
+      'username': username,
+      'password': password,
+    };
+  }
 
+  User.fromMap(Map<String, dynamic> map): firstName = map['firstname'],
+        lastName = map['lastname'], username = map['username'],
+        password = map['password'];
+
+  @override
+  String toString(){
+    return 'User{firstname: $firstName, lastname: $lastName, username: '
+        '$username, password: $password}';
+  }
+}
   //createTaskMap():
 
 
-}
+
