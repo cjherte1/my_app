@@ -27,13 +27,14 @@ class DatabaseHelper{
       CREATE TABLE User (
         firstName TEXT,
         lastName TEXT,
-        username TEXT PRIMARY KEY,
+        username TEXT,
         password TEXT
       )
     ''');
     await db.execute(
-        'INSERT INTO User (firstName, lastName, username, password) values ("Admin", "Admin", "Admin", "Admin")'
+        'INSERT INTO User (firstName, lastName, username, password) VALUES ("Admin", "Admin", "admin", "Admin")'
     );
+    print('Database Initialized.');
   }
     Future<List<User>> getUsers() async{
       Database db = await instance.database;
@@ -48,8 +49,34 @@ class DatabaseHelper{
       Database db = await instance.database;
       var userRow = await db.rawQuery('SELECT * FROM User WHERE username=? and password=?', [username, password]
       );
+      userRow.isNotEmpty ? print('Login success for user ' + username) : print('Login failed for user ' + username);
       Future<bool> rval = userRow.isNotEmpty ? Future<bool>.value(true) : Future<bool>.value(false);
       return rval;
+    }
+
+    void addUser(String username, String password) async {
+      Database db = await instance.database;
+      var userRow = await db.rawQuery('SELECT * FROM User WHERE username=?', [username]);
+      if (userRow.isEmpty){
+        await db.rawInsert('INSERT INTO User VALUES (?, ?, ?, ?)', ["test", "test", username, password]);
+        print('Inserted user ' + username);
+      }
+      else{
+        print('Could not insert ' + username + '. Username already exists.');
+      }
+    }
+
+    void removeUser(String username) async {
+      Database db = await instance.database;
+      await db.rawQuery('DELETE from User where username=?', [username]);
+      print('Removed user ' + username);
+    }
+
+    void deleteDb() async{
+      Directory documentsDirectory = await getApplicationDocumentsDirectory();
+      String path = join(documentsDirectory.path, "mydatabase.db");
+      await deleteDatabase(path);
+      print('Deleted database.');
     }
 
   Future<User> getUserByUsername(String username) async {

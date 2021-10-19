@@ -52,16 +52,26 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                   child: const Text('Login'),
                   onPressed: () async {
-                    print(userController.text + passwordController.text);
-                    bool result = await DatabaseHelper.instance
-                        .authenticateLogin(
-                            userController.text, passwordController.text);
-                    print(result);
-                    if (result) {
-                      print("success");
-                    } else {
-                      print('fail');
-                    }
+                    await DatabaseHelper.instance.authenticateLogin(
+                        userController.text.toLowerCase(), passwordController.text);
+                  }),
+              ElevatedButton(
+                  child: const Text('Add'),
+                  onPressed: () {
+                    DatabaseHelper.instance.addUser(userController.text.toLowerCase(), passwordController.text);
+
+                  }),
+              ElevatedButton(
+                  child: const Text('Delete User'),
+                  onPressed: () {
+                    DatabaseHelper.instance.removeUser(userController.text.toLowerCase());
+
+                  }),
+              ElevatedButton(
+                  child: const Text('Delete DB'),
+                  onPressed: () {
+                    DatabaseHelper.instance.deleteDb();
+
                   }),
             ],
           ),
