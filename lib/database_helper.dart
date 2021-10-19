@@ -14,7 +14,7 @@ class DatabaseHelper{
 
   Future<Database> _initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "mydatabase.db");
+    String path = join(documentsDirectory.path, 'mydatabase.db');
     return await openDatabase(
         path,
         version: 1,
@@ -72,6 +72,12 @@ class DatabaseHelper{
       print('Removed user ' + username);
     }
 
+    void clearDb() async{
+      Database db = await instance.database;
+      await db.execute('DELETE from User where username!="admin"');
+      print('Cleared database.');
+    }
+
     void deleteDb() async{
       Directory documentsDirectory = await getApplicationDocumentsDirectory();
       String path = join(documentsDirectory.path, "mydatabase.db");
@@ -81,8 +87,8 @@ class DatabaseHelper{
 
   Future<User> getUserByUsername(String username) async {
     Database db = await instance.database;
-    var result = await db.query("User", where: "username = ", whereArgs: [username]);
-    return User.fromMap(result.first);
+    List users = await db.query("User", where: "username = ?", whereArgs: [username], limit: 1);
+    return User.fromMap(users[0]);
   }
 
 }

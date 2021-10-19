@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
-import 'database_helper.dart';
+import 'login_screen.dart';
+import 'home_screen.dart';
+//import 'database_helper.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(
+    MaterialApp(
+      title: 'Task Manager App',
+      // Start the app with the "/" named route
+      initialRoute: '/',
+      routes: {
+        // When navigating to the "/" route, build the LoginScreen widget.
+        '/': (context) => const LoginScreen(),
+        // When navigating to the "/second" route, build the HomeScreen widget.
+        '/home': (context) => const HomeScreen(),
+      },
+    ),
+  );
+}
+
+/*void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -52,8 +70,9 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                   child: const Text('Login'),
                   onPressed: () async {
-                    await DatabaseHelper.instance.authenticateLogin(
+                    var result = await DatabaseHelper.instance.authenticateLogin(
                         userController.text.toLowerCase(), passwordController.text);
+                    result ? Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())) : print("Pop up error here.");
                   }),
               ElevatedButton(
                   child: const Text('Add'),
@@ -65,6 +84,12 @@ class _MyAppState extends State<MyApp> {
                   child: const Text('Delete User'),
                   onPressed: () {
                     DatabaseHelper.instance.removeUser(userController.text.toLowerCase());
+
+                  }),
+              ElevatedButton(
+                  child: const Text('Clear DB'),
+                  onPressed: () {
+                    DatabaseHelper.instance.clearDb();
 
                   }),
               ElevatedButton(
@@ -81,7 +106,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-/*void main() => runApp(const MaterialApp(
+void main() => runApp(const MaterialApp(
   home: Home()
 ));
 
@@ -139,8 +164,8 @@ class Home extends StatelessWidget {
   }
 }
 
-class Home2 extends StatelessWidget {
-  const Home2({Key? key}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -170,4 +195,5 @@ class Home2 extends StatelessWidget {
     );
   }
 }
+
 */
