@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../database_helper.dart';
 import '../models/user.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 
 
-    final args = ModalRoute.of(context)!.settings.arguments as User;
+    final currentUser = ModalRoute.of(context)!.settings.arguments as User;
 
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Welcome ' + args.firstName + '!',
+            'Welcome ' + currentUser.firstName + '!',
             style: TextStyle(
               fontSize: 20,
             ),
@@ -37,6 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: const Text('Logout'),
                 onPressed: () {
                   Navigator.pop(context);
+                }),
+          ),
+          Center(
+            child:  ElevatedButton(
+                child: const Text('Delete My Account'),
+                onPressed: () {
+                  if (currentUser.username == 'admin'){
+                    print('Error pop up to not delete admin');
+                  }
+                  else {
+                    DatabaseHelper.instance.removeUser(
+                        currentUser.username);
+                    Navigator.popUntil(context, ModalRoute.withName('/'));
+                  }
                 }),
           ),
         ],

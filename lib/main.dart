@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import  'package:my_app/pages/home_screen.dart';
 import  'package:my_app/pages/loading.dart';
 import  'package:my_app/pages/login_screen.dart';
-import  'package:my_app/pages/createAccount.dart';
+import 'package:my_app/pages/create_account.dart';
 
 void main() => runApp(MaterialApp(
   routes: {

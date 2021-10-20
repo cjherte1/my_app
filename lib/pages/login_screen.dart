@@ -20,8 +20,7 @@ class _LoginScreenState extends State<LoginScreen>{
           title: const Text('My Application'),
           centerTitle: true,
         ),
-        body: Form(
-          child: Column(
+        body:  Column(
             children: [
               const SizedBox(height: 100),
               Container(
@@ -61,23 +60,8 @@ class _LoginScreenState extends State<LoginScreen>{
                     }
 
                   }),
-              ElevatedButton(
-                  child: const Text('Add'),
-                  onPressed: () {
-                    DatabaseHelper.instance.addUser(userController.text.toLowerCase(), passwordController.text);
 
-                  }),
-              ElevatedButton(
-                  child: const Text('Delete User'),
-                  onPressed: () {
-                    if (userController.text.toLowerCase() == 'admin'){
-                      print('Error pop up to not delete admin');
-                    }
-                    else {
-                      DatabaseHelper.instance.removeUser(
-                          userController.text.toLowerCase());
-                    }
-                  }),
+
               ElevatedButton(
                   child: const Text('Clear DB'),
                   onPressed: () {
@@ -92,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen>{
                   }),
             ],
           ),
-        ),
+
       );
 
   }

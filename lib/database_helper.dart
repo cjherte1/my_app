@@ -54,15 +54,17 @@ class DatabaseHelper{
       return rval;
     }
 
-    void addUser(String username, String password) async {
+    Future<bool> addUser(String firstName, String lastName, String username, String password) async {
       Database db = await instance.database;
       var userRow = await db.rawQuery('SELECT * FROM User WHERE username=?', [username]);
       if (userRow.isEmpty){
-        await db.rawInsert('INSERT INTO User VALUES (?, ?, ?, ?)', ["test", "test", username, password]);
+        await db.rawInsert('INSERT INTO User VALUES (?, ?, ?, ?)', [firstName, lastName, username, password]);
         print('Inserted user ' + username);
+        return Future<bool>.value(true);
       }
       else{
         print('Could not insert ' + username + '. Username already exists.');
+        return Future<bool>.value(false);
       }
     }
 
