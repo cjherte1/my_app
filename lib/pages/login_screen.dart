@@ -15,8 +15,7 @@ class _LoginScreenState extends State<LoginScreen>{
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('My Application'),
           centerTitle: true,
@@ -94,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen>{
             ],
           ),
         ),
-      ),
-    );
+      );
+
   }
 }
