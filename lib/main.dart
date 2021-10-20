@@ -1,113 +1,17 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
-import 'home_screen.dart';
-//import 'database_helper.dart';
+import  'package:my_app/pages/home_screen.dart';
+import  'package:my_app/pages/loading.dart';
+import  'package:my_app/pages/login_screen.dart';
+import  'package:my_app/pages/createAccount.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      title: 'Task Manager App',
-      // Start the app with the "/" named route
-      initialRoute: '/',
-      routes: {
-        // When navigating to the "/" route, build the LoginScreen widget.
-        '/': (context) => const LoginScreen(),
-        // When navigating to the "/second" route, build the HomeScreen widget.
-        '/home': (context) => const HomeScreen(),
-      },
-    ),
-  );
-}
+void main() => runApp(MaterialApp(
+  routes: {
+    '/': (context) => Loading(),
+    '/home': (context) => HomeScreen(),
+    '/login': (context) => LoginScreen(),
+    '/createAccount': (context) => CreateAccount(),
 
-/*void main() => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final userController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('My Application'),
-          centerTitle: true,
-        ),
-        body: Form(
-          child: Column(
-            children: [
-              SizedBox(height: 100),
-              Container(
-                padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                child: TextFormField(
-                  controller: userController,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                child: TextFormField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                  ),
-                  obscureText: true,
-                ),
-              ),
-              SizedBox(height: 50),
-              ElevatedButton(
-                  child: const Text('Login'),
-                  onPressed: () async {
-                    var result = await DatabaseHelper.instance.authenticateLogin(
-                        userController.text.toLowerCase(), passwordController.text);
-                    result ? Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())) : print("Pop up error here.");
-                  }),
-              ElevatedButton(
-                  child: const Text('Add'),
-                  onPressed: () {
-                    DatabaseHelper.instance.addUser(userController.text.toLowerCase(), passwordController.text);
-
-                  }),
-              ElevatedButton(
-                  child: const Text('Delete User'),
-                  onPressed: () {
-                    DatabaseHelper.instance.removeUser(userController.text.toLowerCase());
-
-                  }),
-              ElevatedButton(
-                  child: const Text('Clear DB'),
-                  onPressed: () {
-                    DatabaseHelper.instance.clearDb();
-
-                  }),
-              ElevatedButton(
-                  child: const Text('Delete DB'),
-                  onPressed: () {
-                    DatabaseHelper.instance.deleteDb();
-
-                  }),
-            ],
-          ),
-        ),
-      ),
-    );
   }
-}
-
-void main() => runApp(const MaterialApp(
-  home: Home()
 ));
 
 
@@ -138,7 +42,7 @@ class Home extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter your username',
+                hintText: 'Enter your username'
               ),
             ),
           ),
@@ -164,8 +68,8 @@ class Home extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Home2 extends StatelessWidget {
+  const Home2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -196,4 +100,3 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-*/
