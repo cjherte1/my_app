@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child:  ElevatedButton(
                 child: const Text('Logout'),
                 onPressed: () {
-                  Navigator.pop(context);
+                    Navigator.popUntil(context, ModalRoute.withName('/'));
                 }),
           ),
           Center(
