@@ -56,9 +56,23 @@ class _LoginScreenState extends State<LoginScreen>{
                       Navigator.pushNamed(context, '/home', arguments: currentUser);
                     }
                     else {
-                      print("Pop up wrong username/password error here.");
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Error: Incorrect username or password. Please try again."),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('OK'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     }
-
                   }),
 
 
