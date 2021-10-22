@@ -36,8 +36,8 @@ class User {
     };
   }
 
-  User.fromMap(Map<String, dynamic> map): firstName = map['firstname'],
-        lastName = map['lastname'], username = map['username'],
+  User.fromMap(Map<String, dynamic> map): firstName = map['firstName'],
+        lastName = map['lastName'], username = map['username'],
         password = map['password'];
 
   @override
