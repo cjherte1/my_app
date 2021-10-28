@@ -16,15 +16,16 @@ class _LoadingState extends State<Loading> {
       body: Center(
         child: IntrinsicWidth(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context,'/login');
                 },
                 child: Text('Login'),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context,'/createAccount');
                 },

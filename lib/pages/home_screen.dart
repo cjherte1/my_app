@@ -9,28 +9,37 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+
   @override
   Widget build(BuildContext context) {
 
-
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
+
+    const List<Tab> tabs = <Tab>[
+      Tab(text: "Tasks"),
+      Tab(text: "Reminders"),
+      Tab(text: "Timer"),
+      Tab(text: "Achievements"),
+      Tab(text: "Settings")
+    ];
+    final tabController = TabController(length: tabs.length, vsync: this);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
-        centerTitle: true,
+        title: const Text("Home"),
+        //centerTitle: true,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             'Welcome ' + currentUser.firstName + '!',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Center(
@@ -56,6 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      bottomNavigationBar: TabBar(
+        controller: tabController,
+        tabs: tabs,
+        labelColor: Colors.blueAccent,
+        unselectedLabelColor: Colors.blue,
+        indicatorColor: Colors.blue,
+     ),
     );
   }
 }
+
