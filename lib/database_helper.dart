@@ -25,6 +25,7 @@ class DatabaseHelper{
   Future _onCreate(Database db, int version) async{
     await db.execute('''
       CREATE TABLE User (
+        userId INTEGER PRIMARY KEY AUTOINCREMENT,
         firstName TEXT,
         lastName TEXT,
         username TEXT,
@@ -58,7 +59,7 @@ class DatabaseHelper{
       Database db = await instance.database;
       var userRow = await db.rawQuery('SELECT * FROM User WHERE username=?', [username]);
       if (userRow.isEmpty){
-        await db.rawInsert('INSERT INTO User VALUES (?, ?, ?, ?)', [firstName, lastName, username, password]);
+        await db.rawInsert('INSERT INTO User (firstName, lastName, username, password) VALUES (?, ?, ?, ?)', [firstName, lastName, username, password]);
         print('Inserted user ' + username);
         return Future<bool>.value(true);
       }
