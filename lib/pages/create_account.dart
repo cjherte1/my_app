@@ -157,8 +157,28 @@ class CreateAccountFormState extends State<CreateAccountForm> {
                     Navigator.pushNamed(
                         context, '/home', arguments: currentUser);
                   }
+                else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text(
+                            "Error: Username already taken."),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
-              }
+                  }
+                }
+
           ),
         ],
       ),
