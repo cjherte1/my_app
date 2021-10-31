@@ -17,12 +17,19 @@ class _LoginScreenState extends State<LoginScreen>{
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('My Application'),
+          title:
+          const Text('Login',
+              style: TextStyle(
+                color: const Color(0xFFFFFFFF),
+                fontWeight: FontWeight.bold,
+              ),
+          ),
           centerTitle: true,
+          backgroundColor: const Color(0xFFF29765),
         ),
         body:  Column(
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 50),
               Container(
                 padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextFormField(
@@ -47,7 +54,15 @@ class _LoginScreenState extends State<LoginScreen>{
               ),
               const SizedBox(height: 50),
               ElevatedButton(
-                  child: const Text('Login'),
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xFFF29765),
+                ),
+                  child: const Text('Login',
+                      style: TextStyle(
+                        color: const Color(0xFFFFFFFF),
+                        fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () async {
                     var result = await DatabaseHelper.instance.authenticateLogin(
                         userController.text.toLowerCase(), passwordController.text);
@@ -77,13 +92,29 @@ class _LoginScreenState extends State<LoginScreen>{
 
 
               ElevatedButton(
-                  child: const Text('Clear DB'),
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFF29765),
+                  ),
+                  child: const Text('Clear DB',
+                    style: TextStyle(
+                      color: const Color(0xFFFFFFFF),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () {
                     DatabaseHelper.instance.clearDb();
 
                   }),
               ElevatedButton(
-                  child: const Text('Delete DB'),
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFF29765),
+                  ),
+                  child: const Text('Delete DB',
+                    style: TextStyle(
+                      color: const Color(0xFFFFFFFF),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () {
                     DatabaseHelper.instance.deleteDb();
 

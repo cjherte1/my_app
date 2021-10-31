@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import  'package:my_app/pages/home_screen.dart';
 import '../models/user.dart';
 import '../database_helper.dart';
 
@@ -21,13 +20,18 @@ class _CreateAccountState extends State<CreateAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create an Account'),
+        title: const Text('Create an Account',
+          style: TextStyle(
+            color: const Color(0xFFFFFFFF),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.amber,
+        backgroundColor: const Color(0xFFF29765),
       ),
       body: Column(
         children: [
-          const SizedBox(height: 100),
+          const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
@@ -74,8 +78,17 @@ class _CreateAccountState extends State<CreateAccount> {
               obscureText: true,
             ),
           ),
+          SizedBox(height: 30),
           ElevatedButton(
-              child: const Text('Create Account'),
+              style: ElevatedButton.styleFrom(
+                primary: const Color(0xFFF29765),
+              ),
+              child: const Text('Create Account',
+                style: TextStyle(
+                  color: const Color(0xFFFFFFFF),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () async {
                   var success = await DatabaseHelper.instance.addUser(
                     firstNameController.text, lastNameController.text,
@@ -86,8 +99,6 @@ class _CreateAccountState extends State<CreateAccount> {
                     Navigator.pushNamed(context, '/home', arguments: currentUser);
                   }
                 }
-
-
               ),
         ],
       ),

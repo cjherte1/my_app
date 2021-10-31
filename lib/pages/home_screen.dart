@@ -27,8 +27,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home"),
-        //centerTitle: true,
+        title: const Text("Home",
+          style: TextStyle(
+            color: const Color(0xFFFFFFFF),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color(0xFFF29765),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -44,14 +50,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
           Center(
             child:  ElevatedButton(
-                child: const Text('Logout'),
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xFFF29765),
+                ),
+                child: const Text('Logout',
+                    style: TextStyle(
+                      color: const Color(0xFFFFFFFF),
+                      fontWeight: FontWeight.bold,
+                    ),
+                ),
                 onPressed: () {
                     Navigator.popUntil(context, ModalRoute.withName('/'));
                 }),
           ),
           Center(
             child:  ElevatedButton(
-                child: const Text('Delete My Account'),
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xFFF29765),
+                ),
+                child: const Text('Delete My Account',
+                    style: TextStyle(
+                      color: const Color(0xFFFFFFFF),
+                      fontWeight: FontWeight.bold,
+                    ),
+                ),
                 onPressed: () {
                   if (currentUser.username == 'admin'){
                     print('Error pop up to not delete admin');
