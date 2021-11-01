@@ -29,13 +29,46 @@ class _CreateAccountState extends State<CreateAccount> {
         centerTitle: true,
         backgroundColor: const Color(0xFFF29765),
       ),
-      body: Column(
+      body: const CreateAccountForm(),
+    );
+  }
+}
+
+class CreateAccountForm extends StatefulWidget {
+  const CreateAccountForm({Key? key}) : super(key: key);
+
+  @override
+  CreateAccountFormState createState() {
+    return CreateAccountFormState();
+  }
+}
+
+class CreateAccountFormState extends State<CreateAccountForm> {
+
+  final _formKey = GlobalKey<FormState>();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final userController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Form(
+      key: _formKey,
+      child: Column(
         children: [
           const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: firstNameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your first name';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 labelText: 'First Name',
               ),
@@ -48,6 +81,12 @@ class _CreateAccountState extends State<CreateAccount> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: lastNameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your last name';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 labelText: 'Last Name',
               ),
@@ -60,6 +99,12 @@ class _CreateAccountState extends State<CreateAccount> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: userController,
+              validator: (value) {
+                if (value == null || value.length < 3) {
+                  return 'Username needs at least 3 characters';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 labelText: 'Username',
               ),
@@ -72,6 +117,16 @@ class _CreateAccountState extends State<CreateAccount> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: passwordController,
+              validator: (value) {
+                RegExp regExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+                if (value == null) {
+                  return 'Enter a password';
+                }
+                else if (!regExp.hasMatch(value)){
+                  return 'Requires 8 characters, one letter and one number';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 labelText: 'Password',
               ),
@@ -90,19 +145,43 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
               ),
               onPressed: () async {
+
+                if (_formKey.currentState!.validate()) {
                   var success = await DatabaseHelper.instance.addUser(
                     firstNameController.text, lastNameController.text,
                     userController.text.toLowerCase(), passwordController.text,
                   );
-                  if (success){
-                    User currentUser = await DatabaseHelper.instance.getUserByUsername(userController.text.toLowerCase());
-                    Navigator.pushNamed(context, '/home', arguments: currentUser);
+                  if (success) {
+                    User currentUser = await DatabaseHelper.instance
+                        .getUserByUsername(userController.text.toLowerCase());
+                    Navigator.pushNamed(
+                        context, '/home', arguments: currentUser);
+                  }
+                else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text(
+                            "Error: Username already taken."),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
                   }
                 }
-              ),
+
+          ),
         ],
       ),
-
     );
   }
 }
