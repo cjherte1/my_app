@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import '../database_helper.dart';
-import '../models/user.dart';
+import 'package:my_app/pages/tasks.dart';
+import 'package:my_app/pages/reminders.dart';
+import 'package:my_app/pages/timer.dart';
+import 'package:my_app/pages/achievements.dart';
+import 'package:my_app/pages/settings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,12 +12,10 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
-    final currentUser = ModalRoute.of(context)!.settings.arguments as User;
 
     const List<Tab> tabs = <Tab>[
       Tab(text: "Tasks"),
@@ -26,44 +27,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final tabController = TabController(length: tabs.length, vsync: this);
 
     return Scaffold(
+
       appBar: AppBar(
         title: const Text("Home"),
-        //centerTitle: true,
+        centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Welcome ' + currentUser.firstName + '!',
-            style: const TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-            child:  ElevatedButton(
-                child: const Text('Logout'),
-                onPressed: () {
-                    Navigator.popUntil(context, ModalRoute.withName('/'));
-                }),
-          ),
-          Center(
-            child:  ElevatedButton(
-                child: const Text('Delete My Account'),
-                onPressed: () {
-                  if (currentUser.username == 'admin'){
-                    print('Error pop up to not delete admin');
-                  }
-                  else {
-                    DatabaseHelper.instance.removeUser(
-                        currentUser.username);
-                    Navigator.popUntil(context, ModalRoute.withName('/'));
-                  }
-                }),
-          ),
-        ],
+      body: TabBarView(
+        controller: tabController,
+          children: const <Widget>[
+            Tasks(),
+            Reminders(),
+            Timer(),
+            Achievements(),
+            Settings(),
+          ]
       ),
       bottomNavigationBar: TabBar(
         controller: tabController,
@@ -71,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         labelColor: Colors.blueAccent,
         unselectedLabelColor: Colors.blue,
         indicatorColor: Colors.blue,
-     ),
+      ),
     );
   }
 }

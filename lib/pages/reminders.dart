@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Timer extends StatefulWidget {
-  const Timer({Key? key}) : super(key: key);
+class Reminders extends StatefulWidget {
+  const Reminders({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => TimerState();
+  State<StatefulWidget> createState() => RemindersState();
 
 }
 
-class TimerState extends State<Timer> {
+class RemindersState extends State<Reminders> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class TimerState extends State<Timer> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
-          Text("Timer Page!"),
+          Text("Reminders Page!"),
         ],
       ),
     );
