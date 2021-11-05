@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 import '../database_helper.dart';
 
+
+
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
 
@@ -63,12 +65,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: firstNameController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your first name';
-                }
-                return null;
-              },
+              validator: FirstNameValidator.validate,
               decoration: const InputDecoration(
                 labelText: 'First Name',
               ),
@@ -81,12 +78,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: lastNameController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your last name';
-                }
-                return null;
-              },
+              validator: LastNameValidator.validate,
               decoration: const InputDecoration(
                 labelText: 'Last Name',
               ),
@@ -99,12 +91,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: userController,
-              validator: (value) {
-                if (value == null || value.length < 3) {
-                  return 'Username needs at least 3 characters';
-                }
-                return null;
-              },
+              validator: CreateUsernameValidator.validate,
               decoration: const InputDecoration(
                 labelText: 'Username',
               ),
@@ -117,16 +104,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: passwordController,
-              validator: (value) {
-                RegExp regExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
-                if (value == null) {
-                  return 'Enter a password';
-                }
-                else if (!regExp.hasMatch(value)){
-                  return 'Requires 8 characters, one letter and one number';
-                }
-                return null;
-              },
+              validator: CreatePasswordValidator.validate,
               decoration: const InputDecoration(
                 labelText: 'Password',
               ),
@@ -183,5 +161,48 @@ class CreateAccountFormState extends State<CreateAccountForm> {
         ],
       ),
     );
+  }
+}
+
+class FirstNameValidator{
+  static String? validate(String? value){
+    if (value == null || value.isEmpty) {
+      return 'Please enter your first name';
+    }
+    return null;
+
+  }
+}
+
+class LastNameValidator{
+  static String? validate(String? value){
+    if (value == null || value.isEmpty){
+      return 'Please enter your last name';
+    }
+    else{
+      return null;
+    }
+  }
+}
+
+class CreateUsernameValidator{
+  static String? validate(String? value){
+    if (value == null || value.length < 3) {
+      return 'Username needs at least 3 characters';
+    }
+    return null;
+  }
+}
+
+class CreatePasswordValidator{
+  static String? validate(String? value){
+    RegExp regExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+    if (value == null || value.isEmpty) {
+      return 'Enter a password';
+    }
+    else if (!regExp.hasMatch(value)){
+      return 'Minimum 8 characters, one letter and one number';
+    }
+    return null;
   }
 }

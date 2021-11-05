@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../database_helper.dart';
 import '../models/user.dart';
 
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -61,14 +62,7 @@ class LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: userController,
-              validator: (value) {
-                if (value == null || value.isEmpty){
-                  return 'Please enter a username';
-                }
-                else{
-                  return null;
-                }
-              },
+              validator: UsernameValidator.validate,
               decoration: const InputDecoration(
                 labelText: 'Username',
               ),
@@ -81,14 +75,7 @@ class LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
               controller: passwordController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a password';
-                }
-                else{
-                  return null;
-                }
-              },
+              validator: PasswordValidator.validate,
               decoration: const InputDecoration(
                 labelText: 'Password',
               ),
@@ -172,5 +159,27 @@ class LoginFormState extends State<LoginForm> {
         ],
       ),
     );
+  }
+}
+
+class UsernameValidator{
+  static String? validate(String? value){
+    if (value == null || value.isEmpty){
+      return 'Please enter a username';
+    }
+    else{
+      return null;
+    }
+  }
+}
+
+class PasswordValidator{
+  static String? validate(String? value){
+    if (value == null || value.isEmpty) {
+      return 'Please enter a password';
+    }
+    else{
+      return null;
+    }
   }
 }
