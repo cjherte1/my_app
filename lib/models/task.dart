@@ -3,15 +3,20 @@ import 'package:flutter/cupertino.dart';
 class Task extends StatefulWidget {
   int id;
   String name;
-  int date;
-  int time;
+  String datetime;
   String description;
+  int isCompleted = 0;
+  int userId;
 
-  Task(this.id, this.name, this.date, this.time, this.description);
+  Task(this.id, this.name, this.datetime, this.description, this.userId);
 
 
   getName() => name;		//return name given by ID
-  getDate() => date;
+  getDate() => datetime;
+
+  Task.fromMap(Map<String, dynamic> map): id = map['taskId'], name = map['name'],
+        datetime = map['datetime'], description = map['description'],
+        isCompleted = map['isCompleted'], userId = map['userId'];
 
   @override
   State<StatefulWidget> createState() {

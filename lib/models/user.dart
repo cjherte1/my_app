@@ -2,6 +2,7 @@ import './task.dart';
 
 class User {
 
+  int id;
   String firstName;
   String lastName;
   String username;
@@ -9,7 +10,7 @@ class User {
   int taskCount = 0; //number of task for user
   List tasks = [];
 
-  User(this.firstName, this.lastName, this.username, this.password);
+  User(this.id, this.firstName, this.lastName, this.username, this.password);
 
   //return First and Last name
   getName() => firstName + ' ' + lastName;
@@ -36,7 +37,7 @@ class User {
     };
   }
 
-  User.fromMap(Map<String, dynamic> map): firstName = map['firstName'],
+  User.fromMap(Map<String, dynamic> map): id = map['userId'], firstName = map['firstName'],
         lastName = map['lastName'], username = map['username'],
         password = map['password'];
 
