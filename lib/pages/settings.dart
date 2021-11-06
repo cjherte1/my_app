@@ -30,14 +30,30 @@ class SettingsState extends State<Settings> {
           ),
           Center(
             child:  ElevatedButton(
-                child: const Text('Logout'),
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xFFF29765),
+                ),
+                child: const Text('Logout',
+                  style: TextStyle(
+                    color: const Color(0xFFFFFFFF),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onPressed: () {
-                    Navigator.popUntil(context, ModalRoute.withName('/'));
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
                 }),
           ),
           Center(
             child:  ElevatedButton(
-                child: const Text('Delete My Account'),
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xFFF29765),
+                ),
+                child: const Text('Delete My Account',
+                  style: TextStyle(
+                    color: const Color(0xFFFFFFFF),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onPressed: () {
                   if (currentUser.username == 'admin'){
                     print('Error pop up to not delete admin');
