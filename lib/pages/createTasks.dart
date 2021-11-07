@@ -77,10 +77,10 @@ class _CreateTasksState extends State<CreateTasks> {
               children: <Widget>[
                 pressed ? const CreateTasksForm() : SizedBox(),
                 ElevatedButton(
-                  child: Text("add Task"),
+                  child: pressed ? Text("Go Back") : Text("Add Task"),
                   onPressed: () {
                     setState(() {
-                      pressed = true;
+                      pressed = !pressed;
                     });
                   },
                 )
