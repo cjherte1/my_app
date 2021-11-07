@@ -4,6 +4,39 @@ import '../models/task.dart';
 import '../database_helper.dart';
 
 
+/*
+CREATES A CARD WIDGET FOR EACH TASK
+just formats the task information into a box
+ */
+Widget taskCard(task) {
+  return Card(
+      margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(
+              task.datetime,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey[600],
+              ),
+            ),
+            SizedBox(height: 6.0),
+            Text(
+              task.name,
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.grey[800],
+              ),
+            ),
+          ],
+        ),
+      )
+  );
+}
+
 class CreateTasks extends StatefulWidget {
   const CreateTasks({Key? key}) : super(key: key);
 
@@ -12,7 +45,7 @@ class CreateTasks extends StatefulWidget {
 }
 
 class _CreateTasksState extends State<CreateTasks> {
-
+  bool pressed = false;
 
   final nameController = TextEditingController();
   final datetimeController = TextEditingController();
@@ -21,18 +54,50 @@ class _CreateTasksState extends State<CreateTasks> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = ModalRoute.of(context)!.settings.arguments as User;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Task',
-          style: TextStyle(
-            color: const Color(0xFFFFFFFF),
-            fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          title: const Text('Create Task',
+            style: TextStyle(
+              color: const Color(0xFFFFFFFF),
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          centerTitle: true,
+          backgroundColor: const Color(0xFFF29765),
         ),
-        centerTitle: true,
-        backgroundColor: const Color(0xFFF29765),
-      ),
-      body: const CreateTasksForm(),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Welcome ' + currentUser.firstName + '!',
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Column(
+              //TO DO: ONLY SHOW TAKS FOR THAT DAY
+              children: currentUser.tasks.map((task) => taskCard(task)).toList(),
+            ),
+            ListView(
+              children: <Widget>[
+                pressed ? const CreateTasksForm() : SizedBox(),
+                RaisedButton(
+                  child: Text("add Task"),
+                  onPressed: () {
+                    setState(() {
+                      pressed = true;
+                    });
+                  },
+                )
+              ],
+            ),
+
+          ],
+        )
     );
   }
 }
@@ -56,7 +121,10 @@ class CreateTasksFormState extends State<CreateTasksForm> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = ModalRoute.of(context)!.settings.arguments as User;
+    final currentUser = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as User;
     return Form(
       key: _formKey,
       child: Column(
@@ -114,9 +182,9 @@ class CreateTasksFormState extends State<CreateTasksForm> {
                 ),
               ),
               onPressed: () async {
-
                 if (_formKey.currentState!.validate()) {
-                  DatabaseHelper.instance.addTask( //I HAVE NO IDEA HOW TO CALL THE FUNCTION FROM THE DATABASE HELPER LOL PLS HELP
+                  DatabaseHelper.instance
+                      .addTask( //I HAVE NO IDEA HOW TO CALL THE FUNCTION FROM THE DATABASE HELPER LOL PLS HELP
                     nameController.text, datetimeController.text,
                     descriptionController.text, currentUser.id,
                   );
@@ -130,29 +198,28 @@ class CreateTasksFormState extends State<CreateTasksForm> {
   }
 }
 
-class nameValidator{
-  static String? validate(String? value){
+class nameValidator {
+  static String? validate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a task name';
     }
     return null;
-
   }
 }
 //TO DO: validate date and time in correct format.
-class datetimeValidator{
-  static String? validate(String? value){
-    if (value == null || value.isEmpty){
+class datetimeValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please enter a date';
     }
-    else{
+    else {
       return null;
     }
   }
 }
 
-class descriptionValidator{
-  static String? validate(String? value){
+class descriptionValidator {
+  static String? validate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a description';
     }

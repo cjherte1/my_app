@@ -75,39 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         centerTitle: true,
         backgroundColor: const Color(0xFFF29765),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Welcome ' + currentUser.firstName + '!',
-            style: const TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Column(
-            //TO DO: ONLY SHOW TAKS FOR THAT DAY
-            children: currentUser.tasks.map((task) => taskCard(task)).toList(),
-          ),
-          Center(
-            child:  ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: const Color(0xFFF29765),
-                ),
-                child: const Text('Logout',
-                  style: TextStyle(
-                    color: const Color(0xFFFFFFFF),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
-                }),
-          ),
-          /*
-          Center(
+      body: Center(
             child:  TabBarView(
               controller: tabController,
               children: const <Widget>[
@@ -118,10 +86,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Settings(),
             ],),
           ),
-*/
-        ],
-      ),
-
       bottomNavigationBar: TabBar(
         controller: tabController,
         tabs: tabs,

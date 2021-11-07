@@ -8,7 +8,7 @@ class User {
   String username;
   String password;
   int taskCount = 0; //number of task for user
-  List tasks = [];
+  List<Task> tasks = [];
 
   User(this.id, this.firstName, this.lastName, this.username, this.password);
 
