@@ -55,18 +55,7 @@ class _CreateTasksState extends State<CreateTasks> {
   @override
   Widget build(BuildContext context) {
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Create Task',
-            style: TextStyle(
-              color: const Color(0xFFFFFFFF),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: const Color(0xFFF29765),
-        ),
-        body: Column(
+    return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
@@ -78,10 +67,10 @@ class _CreateTasksState extends State<CreateTasks> {
             const SizedBox(
               height: 5,
             ),
-            Column(
+            /*Column(
               //TO DO: ONLY SHOW TAKS FOR THAT DAY
               children: currentUser.tasks.map((task) => taskCard(task)).toList(),
-            ),
+            ),*/
             ListView(
               children: <Widget>[
                 pressed ? const CreateTasksForm() : SizedBox(),
@@ -97,8 +86,7 @@ class _CreateTasksState extends State<CreateTasks> {
             ),
 
           ],
-        )
-    );
+        );
   }
 }
 
