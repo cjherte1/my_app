@@ -83,9 +83,11 @@ class _CreateTasksState extends State<CreateTasks> {
               children: currentUser.tasks.map((task) => taskCard(task)).toList(),
             ),
             ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
               children: <Widget>[
                 pressed ? const CreateTasksForm() : SizedBox(),
-                RaisedButton(
+                ElevatedButton(
                   child: Text("add Task"),
                   onPressed: () {
                     setState(() {
