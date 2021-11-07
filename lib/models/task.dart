@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 
-class Task extends StatefulWidget {
+class Task  {
   int id;
   String name;
   String datetime;
@@ -18,10 +17,6 @@ class Task extends StatefulWidget {
         datetime = map['datetime'], description = map['description'],
         isCompleted = map['isCompleted'], userId = map['userId'];
 
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
+
 
 }
