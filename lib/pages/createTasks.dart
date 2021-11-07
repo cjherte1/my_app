@@ -173,8 +173,7 @@ class CreateTasksFormState extends State<CreateTasksForm> {
               ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  DatabaseHelper.instance
-                      .addTask( //I HAVE NO IDEA HOW TO CALL THE FUNCTION FROM THE DATABASE HELPER LOL PLS HELP
+                  await DatabaseHelper.instance.addTask( //I HAVE NO IDEA HOW TO CALL THE FUNCTION FROM THE DATABASE HELPER LOL PLS HELP
                     nameController.text, datetimeController.text,
                     descriptionController.text, currentUser.id,
                   );

@@ -112,7 +112,7 @@ class DatabaseHelper{
     return User.fromMap(users[0]);
   }
 
-  void addTask(String name, String datetime, String description, int userId) async {
+  Future<void> addTask(String name, String datetime, String description, int userId) async {
     Database db = await instance.database;
       await db.rawInsert('INSERT INTO Task (name, datetime, description, userId) VALUES (?, ?, ?, ?)', [name, datetime, description, userId]);
       print('Inserted task ' + name);
