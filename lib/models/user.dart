@@ -85,3 +85,12 @@ void deleteUser(User user){
 int getUserTotal(){
   return userNum;
 }
+
+List<User> getUsers(){
+  return users;
+}
+
+void addTask(User user, Task task){
+  user.taskCount = user.taskCount + 1;
+  user.tasks.add(task);
+}

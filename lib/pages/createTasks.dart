@@ -67,10 +67,10 @@ class _CreateTasksState extends State<CreateTasks> {
             const SizedBox(
               height: 5,
             ),
-            /*Column(
+            Column(
               //TO DO: ONLY SHOW TAKS FOR THAT DAY
               children: currentUser.tasks.map((task) => taskCard(task)).toList(),
-            ),*/
+            ),
             ListView(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -172,7 +172,15 @@ class CreateTasksFormState extends State<CreateTasksForm> {
                 ),
               ),
               onPressed: () async {
+
+                Task task = Task(currentUser.taskCount, nameController.text, datetimeController.text,
+                  descriptionController.text, currentUser.id,);
+
+                addTask(currentUser, task);
+
+
                 if (_formKey.currentState!.validate()) {
+
                   await DatabaseHelper.instance.addTask( //I HAVE NO IDEA HOW TO CALL THE FUNCTION FROM THE DATABASE HELPER LOL PLS HELP
                     nameController.text, datetimeController.text,
                     descriptionController.text, currentUser.id,
