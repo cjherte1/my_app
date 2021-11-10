@@ -124,11 +124,17 @@ class CreateAccountFormState extends State<CreateAccountForm> {
               ),
               onPressed: () async {
 
+                User user = User(getUserTotal(),firstNameController.text, lastNameController.text,
+                  userController.text.toLowerCase(), passwordController.text);
+
+                addUser(user);
+
                 if (_formKey.currentState!.validate()) {
                   var success = await DatabaseHelper.instance.addUser(
                     firstNameController.text, lastNameController.text,
                     userController.text.toLowerCase(), passwordController.text,
                   );
+
                   if (success) {
                     User currentUser = await DatabaseHelper.instance
                         .getUserByUsername(userController.text.toLowerCase());

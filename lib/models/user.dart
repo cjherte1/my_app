@@ -49,5 +49,48 @@ class User {
 }
   //createTaskMap():
 
+List<User> users = [];
+int userNum = 0;
 
+User getUserByUserName(String username){
+  var user;
+  for (var u in users){
+    if (u.username == username){
+      user = u;
+    }
+  }
+  return user;
+}
 
+User getUserByID(int userID){
+  var user;
+  for (var u in users){
+    if (u.id == userID){
+      user = u;
+    }
+  }
+  return user;
+}
+
+void addUser(User user){
+  ++userNum;
+  users.add(user);
+}
+
+void deleteUser(User user){
+  --userNum;
+  users.remove(user);
+}
+
+int getUserTotal(){
+  return userNum;
+}
+
+List<User> getUsers(){
+  return users;
+}
+
+void addTask(User user, Task task){
+  user.taskCount = user.taskCount + 1;
+  user.tasks.add(task);
+}
