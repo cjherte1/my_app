@@ -131,7 +131,7 @@ class DatabaseHelper{
     print('Deleted task ID: ' + taskId.toString());
   }
 
-  Future<List<Task>> getTaskByUser(int userId) async{
+  Future<List<Task>> getTasksByUser(int userId) async{
     Database db = await instance.database;
     var tasks = await db.query('Task', where: 'userID = ?', whereArgs: [userId], orderBy: 'taskId');
     List<Task> taskList = tasks.isNotEmpty
