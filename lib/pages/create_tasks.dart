@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 import '../models/task.dart';
 import '../database_helper.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
 /*
 CREATES A CARD WIDGET FOR EACH TASK
@@ -70,6 +71,9 @@ class _CreateTasksState extends State<CreateTasks> {
           children: [Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(
+                height: 20,
+              ),
               Text(
                 'Welcome ' + currentUser.firstName + '!',
                 style: const TextStyle(
@@ -84,12 +88,22 @@ class _CreateTasksState extends State<CreateTasks> {
                 children:
                     currentUser.tasks.map((task) => taskCard(task)).toList(),
               ),
+              const SizedBox(
+                height: 20,
+              ),
               ListView(
+                padding: EdgeInsets.only(left: 30.0, right: 30.0),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 children: <Widget>[
                   pressed ? const CreateTasksForm() : const SizedBox(),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color(0xFFF29765),
+                      textStyle: TextStyle(
+                          color: const Color(0xFFFFFFFF),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold)),
                     child: pressed
                         ? const Text("Go Back")
                         : const Text("Add Task"),
@@ -128,6 +142,7 @@ class CreateTasksFormState extends State<CreateTasksForm> {
   final datetimeController = TextEditingController();
   final descriptionController = TextEditingController();
   final userIdController = TextEditingController();
+  DateTime year = new DateTime(DateTime.now().year);
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +158,7 @@ class CreateTasksFormState extends State<CreateTasksForm> {
               controller: nameController,
               validator: nameValidator.validate,
               decoration: const InputDecoration(
-                labelText: 'task Name',
+                labelText: 'Task Name',
               ),
             ),
           ),
@@ -176,6 +191,39 @@ class CreateTasksFormState extends State<CreateTasksForm> {
           const SizedBox(
             height: 20,
           ),
+          DateTimePicker(
+            type: DateTimePickerType.date,
+            //dateMask: 'yyyy/MM/dd',
+            // controller: _controller3,
+            //initialValue: _initialValue,
+            firstDate: year,
+            lastDate: DateTime(2100),
+            icon: Icon(Icons.event),
+            dateLabelText: 'Date',
+            locale: Locale('en', 'US'),
+            //onChanged: (val) => setState(() => _valueChanged3 = val),
+            // validator: (val) {
+            //  setState(() => _valueToValidate3 = val ?? '');
+            //  return null;
+            //  },
+            //  onSaved: (val) => setState(() => _valueSaved3 = val ?? ''),
+          ),
+          DateTimePicker(
+            type: DateTimePickerType.time,
+            //timePickerEntryModeInput: true,
+            //controller: _controller4,
+            initialValue: '', //_initialValue,
+            icon: Icon(Icons.access_time),
+            timeLabelText: "Time",
+            use24HourFormat: false,
+            locale: Locale('en', 'US'),
+            // onChanged: (val) => setState(() => _valueChanged4 = val),
+            // validator: (val) {
+            //   setState(() => _valueToValidate4 = val ?? '');
+            //  return null;
+            // },
+            //  onSaved: (val) => setState(() => _valueSaved4 = val ?? ''),
+          ),
           SizedBox(height: 30),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -185,6 +233,7 @@ class CreateTasksFormState extends State<CreateTasksForm> {
                 'Create task',
                 style: TextStyle(
                   color: const Color(0xFFFFFFFF),
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),

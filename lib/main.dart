@@ -3,6 +3,7 @@ import  'package:my_app/pages/home_screen.dart';
 import  'package:my_app/pages/loading.dart';
 import  'package:my_app/pages/login_screen.dart';
 import 'package:my_app/pages/create_account.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 void main() => runApp(MaterialApp(
@@ -12,7 +13,15 @@ void main() => runApp(MaterialApp(
     '/login': (context) => LoginScreen(),
     '/createAccount': (context) => CreateAccount(),
 
-  }
+  },
+  localizationsDelegates: [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: [
+    Locale('en', 'US'), // English, no country code
+  ],
 ));
 
 
