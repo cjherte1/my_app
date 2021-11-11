@@ -58,7 +58,8 @@ class CreateAccountFormState extends State<CreateAccountForm> {
 
     return Form(
       key: _formKey,
-      child: Column(
+      child: ListView(
+        children: [Column(
         children: [
           const SizedBox(height: 20),
           Container(
@@ -165,6 +166,8 @@ class CreateAccountFormState extends State<CreateAccountForm> {
 
           ),
         ],
+      ),
+    ],
       ),
     );
   }

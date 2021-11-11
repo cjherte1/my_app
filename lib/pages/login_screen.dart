@@ -55,8 +55,10 @@ class LoginFormState extends State<LoginForm> {
 
     return Form(
       key: _formKey,
-      child: Column(
+      child: ListView(
         children: [
+          Column(
+            children: [
           const SizedBox(height: 50),
           Container(
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -156,8 +158,12 @@ class LoginFormState extends State<LoginForm> {
                 DatabaseHelper.instance.deleteDb();
 
               }),
+      ],
+          ),
         ],
+
       ),
+
     );
   }
 }
