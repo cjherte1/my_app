@@ -11,16 +11,14 @@ class Timer extends StatefulWidget {
 class TimerState extends State<Timer> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Achievements"),
-      // ),
-      body: Column(
+    return ListView(
+      children: [Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
           Text("Timer Page!"),
         ],
       ),
+    ]
     );
   }
 

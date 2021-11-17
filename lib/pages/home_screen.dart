@@ -44,15 +44,12 @@ Widget taskCard(task) {
             ),
           ],
         ),
-      )
-  );
+      ));
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
-
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
 
     const List<Tab> tabs = <Tab>[
@@ -66,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home",
+        title: const Text(
+          "Home",
           style: TextStyle(
             color: const Color(0xFFFFFFFF),
             fontWeight: FontWeight.bold,
@@ -74,27 +72,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFF29765),
-          automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
       ),
       body: Center(
-            child:  TabBarView(
-              controller: tabController,
-              children: const <Widget>[
-              CreateTasks(),
-              Reminders(),
-              Timer(),
-              Achievements(),
-              Settings(),
-            ],),
-          ),
+        child: TabBarView(
+          controller: tabController,
+          children: const <Widget>[
+            CreateTasks(),
+            Reminders(),
+            Timer(),
+            Achievements(),
+            Settings(),
+          ],
+        ),
+      ),
       bottomNavigationBar: TabBar(
         controller: tabController,
         tabs: tabs,
         labelColor: Colors.blueAccent,
         unselectedLabelColor: Colors.blue,
         indicatorColor: Colors.blue,
-     ),
+      ),
     );
   }
 }
-

@@ -1,7 +1,6 @@
 import './task.dart';
 
 class User {
-
   int id;
   String firstName;
   String lastName;
@@ -28,7 +27,7 @@ class User {
   //remove task given the name
   deleteTasks(String name) => tasks.removeWhere((item) => item.name == name);
 
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'firstname': firstName,
       'lastname': lastName,
@@ -37,60 +36,63 @@ class User {
     };
   }
 
-  User.fromMap(Map<String, dynamic> map): id = map['userId'], firstName = map['firstName'],
-        lastName = map['lastName'], username = map['username'],
+  User.fromMap(Map<String, dynamic> map)
+      : id = map['userId'],
+        firstName = map['firstName'],
+        lastName = map['lastName'],
+        username = map['username'],
         password = map['password'];
 
   @override
-  String toString(){
+  String toString() {
     return 'User{firstname: $firstName, lastname: $lastName, username: '
         '$username, password: $password}';
   }
 }
-  //createTaskMap():
+//createTaskMap():
 
 List<User> users = [];
 int userNum = 0;
 
-User getUserByUserName(String username){
+User getUserByUserName(String username) {
   var user;
-  for (var u in users){
-    if (u.username == username){
+  for (var u in users) {
+    if (u.username == username) {
       user = u;
     }
   }
   return user;
 }
 
-User getUserByID(int userID){
+User getUserByID(int userID) {
   var user;
-  for (var u in users){
-    if (u.id == userID){
+  for (var u in users) {
+    if (u.id == userID) {
       user = u;
     }
   }
   return user;
 }
 
-void addUser(User user){
+void addUser(User user) {
   ++userNum;
   users.add(user);
 }
 
-void deleteUser(User user){
+void deleteUser(User user) {
   --userNum;
   users.remove(user);
 }
 
-int getUserTotal(){
+int getUserTotal() {
   return userNum;
 }
 
-List<User> getUsers(){
+List<User> getUsers() {
   return users;
 }
 
-void addTask(User user, Task task){
+void addTask(User user, Task task) {
   user.taskCount = user.taskCount + 1;
   user.tasks.add(task);
 }

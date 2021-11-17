@@ -23,7 +23,7 @@ Widget taskCard(task) {
                 color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: 6.0),
+            const SizedBox(height: 6.0),
             Text(
               task.name,
               style: TextStyle(
@@ -43,12 +43,12 @@ class CreateTasks extends StatefulWidget {
   State<CreateTasks> createState() => _CreateTasksState();
 }
 
-Future<List<Task>> getTasks(User user) =>
-    Future<List<Task>>.delayed(const Duration(seconds: 1), () async {
-      var tasks = await DatabaseHelper.instance.getTasksByUser(user.id);
-      user.tasks = tasks;
-      return tasks;
-    });
+// Future<List<Task>> getTasks(User user) =>
+//     Future<List<Task>>.delayed(const Duration(seconds: 1), () async {
+//       var tasks = await DatabaseHelper.instance.getTasksByUser(user.id);
+//       user.tasks = tasks;
+//       return tasks;
+//     });
 
 class _CreateTasksState extends State<CreateTasks> {
   bool pressed = false;
@@ -62,69 +62,65 @@ class _CreateTasksState extends State<CreateTasks> {
   Widget build(BuildContext context) {
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
 
-    Future<List<Task>> tasks = getTasks(currentUser);
-    return FutureBuilder<List<Task>>(
-      future: tasks,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return ListView(
-          children: [Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+    // Future<List<Task>> tasks = getTasks(currentUser);
+    // return FutureBuilder<List<Task>>(
+    //   future: tasks,
+    //   builder: (context, snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.done) {
+    return ListView(children: [
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Welcome ' + currentUser.firstName + '!',
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Column(
+            //TO DO: ONLY SHOW TAKS FOR THAT DAY
+            children: currentUser.tasks.map((task) => taskCard(task)).toList(),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ListView(
+            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
             children: <Widget>[
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Welcome ' + currentUser.firstName + '!',
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Column(
-                //TO DO: ONLY SHOW TAKS FOR THAT DAY
-                children:
-                    currentUser.tasks.map((task) => taskCard(task)).toList(),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ListView(
-                padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: <Widget>[
-                  pressed ? const CreateTasksForm() : const SizedBox(),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color(0xFFF29765),
-                      textStyle: TextStyle(
-                          color: const Color(0xFFFFFFFF),
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold)),
-                    child: pressed
-                        ? const Text("Go Back")
-                        : const Text("Add Task"),
-                    onPressed: () {
-                      setState(() {
-                        pressed = !pressed;
-                      });
-                    },
-                  )
-                ],
-              ),
+              pressed ? const CreateTasksForm() : const SizedBox(),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFF29765),
+                    textStyle: const TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold)),
+                child: pressed ? const Text("Go Back") : const Text("Add Task"),
+                onPressed: () {
+                  setState(() {
+                    pressed = !pressed;
+                  });
+                },
+              )
             ],
           ),
-        ]
-          );
-        }
-
-        return const Center(child: CircularProgressIndicator());
-      },
-    );
+        ],
+      ),
+    ]);
   }
+
+  //       return const Center(child: CircularProgressIndicator());
+  //     },
+  //   );
+  // }
 }
 
 class CreateTasksForm extends StatefulWidget {
@@ -142,7 +138,7 @@ class CreateTasksFormState extends State<CreateTasksForm> {
   final datetimeController = TextEditingController();
   final descriptionController = TextEditingController();
   final userIdController = TextEditingController();
-  DateTime year = new DateTime(DateTime.now().year);
+  DateTime year = DateTime(DateTime.now().year);
 
   @override
   Widget build(BuildContext context) {

@@ -12,61 +12,66 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Me-Minders',
+        title: const Text(
+          'Me-Minders',
           style: TextStyle(
-          color: const Color(0xFFF29765),
-          fontWeight: FontWeight.bold,
+            color: Color(0xFFF29765),
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFFFFFFF),
       ),
       backgroundColor: const Color(0xFFF29765),
-      body: Center(
-        child: IntrinsicWidth(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SizedBox(height: 40),
-              Image.asset(
-               'assets/me-minders-orange.jpeg',
-               height: 275,
-               width: 275,
-             ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: const Color(0xFFFFFFFF),
+      body: ListView(children: [
+        Center(
+          child: IntrinsicWidth(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                const SizedBox(height: 40),
+                Image.asset(
+                  'assets/me-minders-orange.jpeg',
+                  height: 275,
+                  width: 275,
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context,'/login');
-                },
-                child: Text('Login',
-                  style: TextStyle(
-                    color: const Color(0xFFF29765),
-                  fontWeight: FontWeight.bold,
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFFFFFFF),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      color: Color(0xFFF29765),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: const Color(0xFFFFFFFF),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context,'/createAccount');
-                },
-                child: Text('Create An Account',
-                  style: TextStyle(
-                    color: const Color(0xFFF29765),
-                    fontWeight: FontWeight.bold,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFFFFFFF),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/createAccount');
+                  },
+                  child: const Text(
+                    'Create An Account',
+                    style: TextStyle(
+                      color: Color(0xFFF29765),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
+      ]),
     );
   }
 }
