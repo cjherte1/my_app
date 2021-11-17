@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../database_helper.dart';
 import '../models/user.dart';
-import '../models/task.dart';
 import '../pages/create_tasks.dart';
 import '../pages/reminders.dart';
 import '../pages/timer.dart';
@@ -80,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           children: const <Widget>[
             CreateTasks(),
             Reminders(),
-            Timer(),
+            TimerPg(),
             Achievements(),
             Settings(),
           ],
