@@ -3,12 +3,16 @@ import '../models/user.dart';
 import '../models/task.dart';
 import '../database_helper.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:intl/intl.dart';
+
 
 /*
 CREATES A CARD WIDGET FOR EACH TASK
 just formats the task information into a box
  */
 Widget taskCard(task) {
+  DateTime dt = DateTime.parse(task.datetime);
+  String formattedDate = DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
   return Card(
       margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
       child: Padding(
@@ -17,7 +21,7 @@ Widget taskCard(task) {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              task.datetime,
+              formattedDate,
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.grey[600],
@@ -61,7 +65,7 @@ class _CreateTasksState extends State<CreateTasks> {
   @override
   Widget build(BuildContext context) {
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
-
+    //List utasks = currentUser.tasks.where((isCompleted) => true).toList();
     // Future<List<Task>> tasks = getTasks(currentUser);
     // return FutureBuilder<List<Task>>(
     //   future: tasks,
@@ -206,11 +210,11 @@ class CreateTasksFormState extends State<CreateTasksForm> {
           // ),
           DateTimePicker(
             type: DateTimePickerType.dateTime,
-            dateMask: 'd MMMM, yyyy - hh:mm a',
+            dateMask: 'MMMM d, yyyy - h:mm a',
             controller: datetimeController,
             //timePickerEntryModeInput: true,
             //controller: _controller4,
-            firstDate: DateTime(2000),
+            firstDate: DateTime(2021),
             lastDate: DateTime(2100),
             //icon: Icon(Icons.event),
             dateLabelText: 'Date Time',
@@ -288,7 +292,7 @@ class nameValidator {
 class datetimeValidator {
   static String? validate(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter a date';
+      return 'Please enter a date and time';
     } else {
       return null;
     }
