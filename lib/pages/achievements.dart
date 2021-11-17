@@ -13,16 +13,14 @@ class AchievementsState extends State<Achievements> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Achievements"),
-      // ),
-      body: Column(
+    return ListView(
+      children: [Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
           Text("Achievements Page!"),
         ],
       ),
+    ]
     );
   }
 

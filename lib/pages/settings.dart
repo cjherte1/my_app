@@ -15,10 +15,13 @@ class SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
 
-    return Scaffold(
-      body: Column(
+    return ListView(
+      children: [Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          const SizedBox(
+            height: 20,
+          ),
           Text(
             'Welcome ' + currentUser.firstName + '!',
             style: const TextStyle(
@@ -67,6 +70,7 @@ class SettingsState extends State<Settings> {
           ),
         ],
       ),
+    ]
     );
   }
 

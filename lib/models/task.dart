@@ -1,5 +1,4 @@
-
-class Task  {
+class Task {
   int id;
   String name;
   String datetime;
@@ -9,14 +8,14 @@ class Task  {
 
   Task(this.id, this.name, this.datetime, this.description, this.userId);
 
-
-  getName() => name;		//return name given by ID
+  getName() => name; //return name given by ID
   getDate() => datetime;
 
-  Task.fromMap(Map<String, dynamic> map): id = map['taskId'], name = map['name'],
-        datetime = map['datetime'], description = map['description'],
-        isCompleted = map['isCompleted'], userId = map['userId'];
-
-
-
+  Task.fromMap(Map<String, dynamic> map)
+      : id = map['taskId'],
+        name = map['name'],
+        datetime = map['datetime'],
+        description = map['description'],
+        isCompleted = map['isCompleted'],
+        userId = map['userId'];
 }
