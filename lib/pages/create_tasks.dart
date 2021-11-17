@@ -161,16 +161,16 @@ class CreateTasksFormState extends State<CreateTasksForm> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-            child: TextFormField(
-              controller: datetimeController,
-              validator: datetimeValidator.validate,
-              decoration: const InputDecoration(
-                labelText: 'Date and Time',
-              ),
-            ),
-          ),
+          // Container(
+          //   padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+          //   child: TextFormField(
+          //     controller: datetimeController,
+          //     validator: datetimeValidator.validate,
+          //     decoration: const InputDecoration(
+          //       labelText: 'Date and Time',
+          //     ),
+          //   ),
+          // ),
           const SizedBox(
             height: 20,
           ),
@@ -187,38 +187,36 @@ class CreateTasksFormState extends State<CreateTasksForm> {
           const SizedBox(
             height: 20,
           ),
+          // DateTimePicker(
+          //   type: DateTimePickerType.date,
+          //   //dateMask: 'yyyy/MM/dd',
+          //   // controller: _controller3,
+          //   //initialValue: _initialValue,
+          //   firstDate: year,
+          //   lastDate: DateTime(2100),
+          //   icon: Icon(Icons.event),
+          //   dateLabelText: 'Date',
+          //   locale: Locale('en', 'US'),
+          //   //onChanged: (val) => setState(() => _valueChanged3 = val),
+          //   // validator: (val) {
+          //   //  setState(() => _valueToValidate3 = val ?? '');
+          //   //  return null;
+          //   //  },
+          //   //  onSaved: (val) => setState(() => _valueSaved3 = val ?? ''),
+          // ),
           DateTimePicker(
-            type: DateTimePickerType.date,
-            //dateMask: 'yyyy/MM/dd',
-            // controller: _controller3,
-            //initialValue: _initialValue,
-            firstDate: year,
-            lastDate: DateTime(2100),
-            icon: Icon(Icons.event),
-            dateLabelText: 'Date',
-            locale: Locale('en', 'US'),
-            //onChanged: (val) => setState(() => _valueChanged3 = val),
-            // validator: (val) {
-            //  setState(() => _valueToValidate3 = val ?? '');
-            //  return null;
-            //  },
-            //  onSaved: (val) => setState(() => _valueSaved3 = val ?? ''),
-          ),
-          DateTimePicker(
-            type: DateTimePickerType.time,
+            type: DateTimePickerType.dateTime,
+            dateMask: 'd MMMM, yyyy - hh:mm a',
+            controller: datetimeController,
             //timePickerEntryModeInput: true,
             //controller: _controller4,
-            initialValue: '', //_initialValue,
-            icon: Icon(Icons.access_time),
-            timeLabelText: "Time",
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2100),
+            //icon: Icon(Icons.event),
+            dateLabelText: 'Date Time',
             use24HourFormat: false,
             locale: Locale('en', 'US'),
-            // onChanged: (val) => setState(() => _valueChanged4 = val),
-            // validator: (val) {
-            //   setState(() => _valueToValidate4 = val ?? '');
-            //  return null;
-            // },
-            //  onSaved: (val) => setState(() => _valueSaved4 = val ?? ''),
+            validator: datetimeValidator.validate,
           ),
           SizedBox(height: 30),
           ElevatedButton(
@@ -234,21 +232,40 @@ class CreateTasksFormState extends State<CreateTasksForm> {
                 ),
               ),
               onPressed: () async {
-                Task task = Task(
-                  currentUser.taskCount,
-                  nameController.text,
-                  datetimeController.text,
-                  descriptionController.text,
-                  currentUser.id,
-                );
 
-                addTask(currentUser, task);
 
                 if (_formKey.currentState!.validate()) {
+                  Task task = Task(
+                    currentUser.taskCount,
+                    nameController.text,
+                    datetimeController.text,
+                    descriptionController.text,
+                    currentUser.id,
+                  );
+
+                  addTask(currentUser, task);
+
                   await DatabaseHelper.instance.addTask(
                     //I HAVE NO IDEA HOW TO CALL THE FUNCTION FROM THE DATABASE HELPER LOL PLS HELP
                     nameController.text, datetimeController.text,
                     descriptionController.text, currentUser.id,
+                  );
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text(
+                            "Successfully added task."),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
                   );
                 }
               }),
