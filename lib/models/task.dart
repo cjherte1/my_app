@@ -1,12 +1,12 @@
 class Task {
-  int id;
+  int id = 0;
   String name;
   String datetime;
   String description;
   int isCompleted = 0;
   int userId;
 
-  Task(this.id, this.name, this.datetime, this.description, this.userId);
+  Task(this.name, this.datetime, this.description, this.userId);
 
   getName() => name; //return name given by ID
   getDate() => datetime;

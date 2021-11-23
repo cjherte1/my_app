@@ -102,6 +102,9 @@ class LoginFormState extends State<LoginForm> {
                                 userController.text.toLowerCase());
                         currentUser.tasks = await DatabaseHelper.instance
                             .getTasksByUser(currentUser.id);
+                        currentUser.completedTasks = await DatabaseHelper.instance
+                            .getCompletedTasksByUser(currentUser.id);
+                        currentUser.points = currentUser.completedTasks.length * 5;
                         currentUser.taskCount = currentUser.tasks.length;
                         Navigator.pushNamed(context, '/home',
                             arguments: currentUser);

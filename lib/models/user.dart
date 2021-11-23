@@ -6,8 +6,10 @@ class User {
   String lastName;
   String username;
   String password;
-  int taskCount = 0; //number of task for user
+  int taskCount = 0;
+  int points = 0;//number of task for user
   List<Task> tasks = [];
+  List<Task> completedTasks = [];
 
   User(this.id, this.firstName, this.lastName, this.username, this.password);
 

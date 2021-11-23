@@ -30,7 +30,7 @@ class DatabaseHelper {
         firstName TEXT,
         lastName TEXT,
         username TEXT,
-        password TEXT
+        password TEXT,
       )
     ''');
 
@@ -49,7 +49,7 @@ class DatabaseHelper {
         'INSERT INTO User (firstName, lastName, username, password) VALUES ("Admin", "Admin", "admin", "Admin")');
 
     await db.execute(
-        'INSERT INTO Task (name, datetime, description, userId) VALUES ("Get Started", "YYYY-MM-DD HH:MM:SS.SSS", "Placeholder for description", 1)');
+        'INSERT INTO Task (name, datetime, description, userId) VALUES ("Get Started", "2021-09-11 00:00:00.000", "Placeholder for description", 1)');
     print('Database Initialized.');
   }
 
@@ -145,9 +145,19 @@ class DatabaseHelper {
   Future<List<Task>> getTasksByUser(int userId) async {
     Database db = await instance.database;
     var tasks = await db.query('Task',
-        where: 'userID = ?', whereArgs: [userId], orderBy: 'taskId');
+        where: 'userID = ? AND isCompleted = 0', whereArgs: [userId], orderBy: 'taskId');
     List<Task> taskList =
         tasks.isNotEmpty ? tasks.map((c) => Task.fromMap(c)).toList() : [];
+    print(taskList);
+    return taskList;
+  }
+
+  Future<List<Task>> getCompletedTasksByUser(int userId) async {
+    Database db = await instance.database;
+    var tasks = await db.query('Task',
+        where: 'userID = ?  AND isCompleted = 1', whereArgs: [userId], orderBy: 'taskId');
+    List<Task> taskList =
+    tasks.isNotEmpty ? tasks.map((c) => Task.fromMap(c)).toList() : [];
     print(taskList);
     return taskList;
   }
