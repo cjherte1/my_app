@@ -87,9 +87,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       bottomNavigationBar: TabBar(
         controller: tabController,
         tabs: tabs,
-        labelColor: Colors.blueAccent,
-        unselectedLabelColor: Colors.blue,
-        indicatorColor: Colors.blue,
+        labelColor: const Color(0xFFF29765),
+        unselectedLabelColor: const Color(0xFFF29765),
+        indicatorColor: const Color(0xFFF29765),
       ),
     );
   }
