@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       Tab(text: "Achievements"),
       Tab(text: "Settings") //, icon: Icon(Icons.settings)
     ];
-    var tabController = TabController(length: tabs.length, vsync: this);
+    final tabController = TabController(length: tabs.length, vsync: this);
 
     //TabBar Animation
     final DecorationTween decorationTween = DecorationTween(
