@@ -101,14 +101,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             automaticallyImplyLeading: false
         ),
         body: Center(
-              child: TabBarView(
-                  controller: tabController,
-                  children: const <Widget>[
-                    CreateTasks(),
-                    Reminders(),
-                    TimerPg(),
-                    Achievements(),
-                    Settings()])
+            child: TabBarView(
+                controller: tabController,
+                children: const <Widget>[
+                  CreateTasks(),
+                  Reminders(),
+                  TimerPg(),
+                  Achievements(),
+                  Settings()])
         ),
         bottomNavigationBar: DecoratedBoxTransition(
           decoration: decorationTween.animate(animationController),
