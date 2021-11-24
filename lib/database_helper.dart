@@ -30,7 +30,7 @@ class DatabaseHelper {
         firstName TEXT,
         lastName TEXT,
         username TEXT,
-        password TEXT,
+        password TEXT
       )
     ''');
 
