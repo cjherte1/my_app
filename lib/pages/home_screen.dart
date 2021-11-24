@@ -100,8 +100,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             backgroundColor: const Color(0xFFF29765),
             automaticallyImplyLeading: false
         ),
-        body: StatefulBuilder(builder: (bodyContext, bodySetState) {
-          return Center(
+        body: Center(
               child: TabBarView(
                   controller: tabController,
                   children: const <Widget>[
@@ -110,8 +109,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     TimerPg(),
                     Achievements(),
                     Settings()])
-          );
-        }),
+        ),
         bottomNavigationBar: DecoratedBoxTransition(
           decoration: decorationTween.animate(animationController),
           child: TabBar(
