@@ -12,7 +12,6 @@ class TimerPg extends StatefulWidget {
 }
 
 class TimerPgState extends State<TimerPg> {
-  @override
   int _hour = 0;
   int _minute = 0;
   int _second = 0;
@@ -20,14 +19,18 @@ class TimerPgState extends State<TimerPg> {
 
   void _startTimer() {
     // Disable the button after it has been pressed
-    CountdownTimer countDownTimer = new CountdownTimer(
-      new Duration(seconds: (_hour*3600)+(_minute*60)+_second+1),
-      new Duration(seconds: 1),
+    CountdownTimer countDownTimer = CountdownTimer(
+      Duration(seconds: (_hour*3600)+(_minute*60)+_second+1),
+      const Duration(seconds: 1),
     );
 
     var sub = countDownTimer.listen(null);
     sub.onData((duration) {
-      setState(() { _current = ((_hour*3600)+(_minute*60)+_second+1) - duration.elapsed.inSeconds; });
+      if(mounted) {
+        setState(() {
+          _current = ((_hour*3600)+(_minute*60)+_second+1) - duration.elapsed.inSeconds;
+        });
+      }
     });
 
     sub.onDone(() {
@@ -36,77 +39,100 @@ class TimerPgState extends State<TimerPg> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
+
     return ListView(
       children: [
+        //TODO: Change all sizedBoxes to correspond with a ratio/ fraction of the screen
+        const SizedBox(height: 100),
+        //Row of columns
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            //Hour column
+            Column(
+              children: <Widget>[
+                const Text("Hours",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                NumberPicker(
+                  value: _hour,
+                  minValue: 0,
+                  maxValue: 23,
+                  haptics: true,
+                  itemHeight: 30.0,
+                  selectedTextStyle: const TextStyle(
+                      color: Color(0xFFF29765),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                  onChanged: (value) => setState(() => _hour = value),
+                ),
+                Text('Hours: $_hour'),
+                const SizedBox(height: 30),
+              ],
+            ),
+            //Minute column
+            Column(
+              children: <Widget>[
+                const Text("Minutes",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                NumberPicker(
+                  value: _minute,
+                  minValue: 0,
+                  maxValue: 59,
+                  haptics: true,
+                  itemHeight: 30.0,
+                  selectedTextStyle: const TextStyle(
+                      color: Color(0xFFF29765),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                  onChanged: (value) => setState(() => _minute = value),
+                ),
+                Text('Minutes: $_minute'),
+                const SizedBox(height: 30),
+              ],
+            ),
+            //Second column
+            Column(
+              children: <Widget>[
+                const Text("Seconds",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                NumberPicker(
+                  value: _second,
+                  minValue: 0,
+                  maxValue: 59,
+                  haptics: true,
+                  itemHeight: 30.0,
+                  selectedTextStyle: const TextStyle(
+                      color: Color(0xFFF29765),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                  onChanged: (value) => setState(() => _second = value),
+                ),
+                Text('Seconds: $_second'),
+                const SizedBox(height: 30),
+              ],
+            ),
+          ],
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Timer Page!"),
-            SizedBox(height: 30),
-            Text("Select number of hours",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            NumberPicker(
-              value: _hour,
-              minValue: 0,
-              maxValue: 23,
-              haptics: true,
-              itemHeight: 30.0,
-              selectedTextStyle: const TextStyle(
-                  color: Color(0xFFF29765),
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-              onChanged: (value) => setState(() => _hour = value),
-            ),
-            Text('Hours: $_hour'),
-            SizedBox(height: 30),
-            Text("Select number of minutes",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            NumberPicker(
-              value: _minute,
-              minValue: 0,
-              maxValue: 59,
-              haptics: true,
-              itemHeight: 30.0,
-              selectedTextStyle: const TextStyle(
-                  color: Color(0xFFF29765),
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-              onChanged: (value) => setState(() => _minute = value),
-            ),
-            Text('Minutes: $_minute'),
-            SizedBox(height: 30),
-            Text("Select number of seconds",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            NumberPicker(
-              value: _second,
-              minValue: 0,
-              maxValue: 59,
-              haptics: true,
-              itemHeight: 30.0,
-              selectedTextStyle: const TextStyle(
-                  color: Color(0xFFF29765),
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-              onChanged: (value) => setState(() => _second = value),
-            ),
-            Text('Seconds: $_second'),
-            SizedBox(height: 30),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: const Color(0xFFF29765),
@@ -117,11 +143,11 @@ class TimerPgState extends State<TimerPg> {
               onPressed: () {
                 _startTimer();
               },
-              child: Text("Start Timer"),
+              child: const Text("Start Timer"),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text("$_current",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
               ),

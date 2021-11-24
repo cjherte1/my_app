@@ -38,7 +38,7 @@ class SettingsState extends State<Settings> {
                 ),
                 child: const Text('Logout',
                   style: TextStyle(
-                    color: const Color(0xFFFFFFFF),
+                    color: Color(0xFFFFFFFF),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -53,7 +53,7 @@ class SettingsState extends State<Settings> {
                 ),
                 child: const Text('Delete My Account',
                   style: TextStyle(
-                    color: const Color(0xFFFFFFFF),
+                    color: Color(0xFFFFFFFF),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
