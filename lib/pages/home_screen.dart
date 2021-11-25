@@ -46,6 +46,8 @@ Widget taskCard(task) {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  String appBarText = "Tasks";
+
   @override
   Widget build(BuildContext context) {
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
@@ -53,44 +55,76 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     const List<Tab> tabs = <Tab>[
       Tab(text: "Tasks"),
       Tab(text: "Reminders"),
-      Tab(text: "Timer"),
+      Tab(text: "Timer"), //, icon: Icon(Icons.timer)
       Tab(text: "Achievements"),
-      Tab(text: "Settings")
+      Tab(text: "Settings") //, icon: Icon(Icons.settings)
     ];
     final tabController = TabController(length: tabs.length, vsync: this);
 
+    //TabBar Animation
+    final DecorationTween decorationTween = DecorationTween(
+      begin: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Colors.white, Color(0xFFF29765)],
+              stops: [0.7, 1.0],
+              begin: AlignmentDirectional.topCenter,
+              end: AlignmentDirectional.bottomCenter,
+              tileMode: TileMode.repeated )),
+      end: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Colors.white, Color(0xFFF29765)],
+              stops: [0.8, 1.0],
+              begin: AlignmentDirectional.topCenter,
+              end: AlignmentDirectional.bottomCenter,
+              tileMode: TileMode.repeated)),
+    );
+    final animationController = AnimationController(vsync: this, duration: const Duration(seconds: 10));
+    animationController.repeat(reverse: true);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Home",
-          style: TextStyle(
-            color: const Color(0xFFFFFFFF),
-            fontWeight: FontWeight.bold,
-          ),
+        appBar: AppBar(
+            //StatefulBuilder allows for the AppBar Title to be refreshed
+            // without refreshing the whole widget
+            title: StatefulBuilder(builder: (titleContext, titleSetState) {
+              tabController.addListener(() {
+                titleSetState(() {
+                  appBarText = tabs.elementAt(tabController.index).text.toString();
+                });
+              });
+              return Text(
+                  appBarText,
+                  style: const TextStyle(color: Color(0xFFFFFFFF),
+                  fontWeight: FontWeight.bold));
+            }),
+            centerTitle: true,
+            backgroundColor: const Color(0xFFF29765),
+            automaticallyImplyLeading: false
         ),
-        centerTitle: true,
-        backgroundColor: const Color(0xFFF29765),
-        automaticallyImplyLeading: false,
-      ),
-      body: Center(
-        child: TabBarView(
-          controller: tabController,
-          children: const <Widget>[
-            CreateTasks(),
-            Reminders(),
-            TimerPg(),
-            Achievements(),
-            Settings(),
-          ],
+        body: Center(
+            child: TabBarView(
+                controller: tabController,
+                children: const <Widget>[
+                  CreateTasks(),
+                  Reminders(),
+                  TimerPg(),
+                  Achievements(),
+                  Settings()])
         ),
-      ),
-      bottomNavigationBar: TabBar(
-        controller: tabController,
-        tabs: tabs,
-        labelColor: const Color(0xFFF29765),
-        unselectedLabelColor: const Color(0xFFF29765),
-        indicatorColor: const Color(0xFFF29765),
-      ),
+        bottomNavigationBar: DecoratedBoxTransition(
+          decoration: decorationTween.animate(animationController),
+          child: TabBar(
+              controller: tabController,
+              tabs: tabs,
+              labelColor: const Color(0xFFF29765),
+              unselectedLabelColor: const Color(0xFFF29765),
+              indicator: const BoxDecoration(
+                  gradient: RadialGradient(
+                      colors: [Colors.white, Colors.blue, Color(0xFFF29765)],
+                      stops: [0.69, 0.7, 0.9],
+                      center: Alignment(0, -1),
+                      radius: 1.4,
+                      //focalRadius: 0.0,
+                      focal: Alignment(0, -1)))))
     );
   }
 }
