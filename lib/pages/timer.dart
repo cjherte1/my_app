@@ -16,10 +16,16 @@ class TimerPgState extends State<TimerPg> {
   int _minute = 0;
   int _second = 0;
   int _current = 0;
+  bool pressedStart = false;
+  bool pressedStop = false;
+  CountdownTimer countDownTimer = CountdownTimer(
+      Duration(seconds: 0),
+      const Duration(seconds: 0),
+  );
 
   void _startTimer() {
     // Disable the button after it has been pressed
-    CountdownTimer countDownTimer = CountdownTimer(
+     countDownTimer = CountdownTimer(
       Duration(seconds: (_hour*3600)+(_minute*60)+_second+1),
       const Duration(seconds: 1),
     );
@@ -36,7 +42,18 @@ class TimerPgState extends State<TimerPg> {
     sub.onDone(() {
       print("Done");
       sub.cancel();
+      pressedStop = false;
+      pressedStart = false;
     });
+  }
+
+  void _stopTimer() {
+    setState(() {
+      _current = 0;
+    });
+    countDownTimer.cancel();
+    pressedStop = false;
+    pressedStart = false;
   }
 
   @override
@@ -133,17 +150,39 @@ class TimerPgState extends State<TimerPg> {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: const Color(0xFFF29765),
-                  textStyle: const TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold)),
-              onPressed: () {
-                _startTimer();
-              },
-              child: const Text("Start Timer"),
+            Visibility(
+              child:
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: const Color(0xFFF29765),
+                      textStyle: const TextStyle(
+                          color: Color(0xFFFFFFFF),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                  onPressed: () {
+                    pressedStart = !pressedStart;
+                    pressedStop = !pressedStop;
+                    _startTimer();
+                  },
+                  child: const Text("Start Timer"),
+              ), //Your widget is gone and won't take up space
+              visible: !pressedStart,
+            ),
+            Visibility(
+              child:
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFF29765),
+                    textStyle: const TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold)),
+                onPressed: () {
+                  _stopTimer();
+                },
+                child: const Text("Stop Timer"),
+              ), //Your widget is gone and won't take up space
+              visible: pressedStart,
             ),
             const SizedBox(height: 10),
             Text("$_current",
