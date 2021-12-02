@@ -213,7 +213,7 @@ class CreateTasksFormState extends State<CreateTasksForm> {
                 primary: const Color(0xFFF29765),
               ),
               child: const Text(
-                'Create task',
+                'Create Task',
                 style: TextStyle(
                   color: Color(0xFFFFFFFF),
                   fontSize: 15,
