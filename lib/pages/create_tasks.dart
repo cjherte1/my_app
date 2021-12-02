@@ -5,41 +5,6 @@ import '../database_helper.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:intl/intl.dart';
 
-/*
-CREATES A CARD WIDGET FOR EACH TASK
-just formats the task information into a box
- */
-Widget taskCard(Task task) {
-  DateTime dt = DateTime.parse(task.datetime);
-  String formattedDate =
-      DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
-  return Card(
-    margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
-    child: Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              formattedDate,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.grey[600],
-              ),
-            ),
-            const SizedBox(height: 6.0),
-            Text(
-              task.name,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.grey[800],
-              ),
-            ),
-          ]),
-    ),
-  );
-}
-
 class CreateTasks extends StatefulWidget {
   const CreateTasks({Key? key}) : super(key: key);
 
@@ -62,6 +27,81 @@ class _CreateTasksState extends State<CreateTasks> {
   final descriptionController = TextEditingController();
   final userIdController = TextEditingController();
 
+  /*
+  CREATES A CARD WIDGET FOR EACH TASK
+  just formats the task information into a box
+  */
+  Widget taskCard(User currentUser, List<Task> currentTasks, int index) {
+    DateTime dt = DateTime.parse(currentTasks[index].datetime);
+    String formattedDate =
+    DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
+
+    //enum PopupEnum = {complete, delete};
+    //PopupMenuItemBuilder itemBuilder = List<PopupMenuEntry> Function(BuildContext context);
+
+    return Dismissible(
+        background: const Card(
+          color: Colors.red,
+          margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+        ),
+        // secondaryBackground:
+        // Container(
+        //   color: Colors.yellow,
+        //   child: const Text("Deleted!")),
+        key: UniqueKey(),
+        onDismissed: (direction) {
+          Task t = currentTasks[index];
+          setState(() {
+            currentTasks.removeAt(index);
+          });
+          currentUser.tasks.remove(t);
+          DatabaseHelper.instance.removeTask(t.id);
+        },
+        child: Card(
+            margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+            child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children:[Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[Text(
+                            currentTasks[index].name,
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.grey[800])),
+                          const SizedBox(height: 6.0),
+                          Text(currentTasks[index].description),
+                          const SizedBox(height: 6.0),
+                          Text(
+                              formattedDate,
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.grey[600])),
+                        ]
+                    ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [IconButton(
+                            color: const Color(0xFFF29765),
+                            onPressed: () {
+                              Task t = currentTasks[index];
+                              setState(() {
+                                currentTasks.removeAt(index);
+                              });
+                              DatabaseHelper.instance.completeTask(t.id);
+                              currentUser.points += 5;
+                              currentUser.completedTasks.add(currentUser.tasks[index]);
+                            },
+                            icon: const Icon(Icons.check))],
+                      )
+                    ]
+                )
+            )
+        )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
@@ -73,42 +113,8 @@ class _CreateTasksState extends State<CreateTasks> {
           itemCount: currentUser.tasks.length,
           itemBuilder: (context, index) {
             return Column(children: [
-              taskCard(currentTasks[index]),
-              Row(children: [
-                const Spacer(),
-                ElevatedButton(
-                  child: const Text('Delete'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                  ),
-                  onPressed: () {
-                    Task t = currentTasks[index];
-                    setState(() {
-                      currentTasks.removeAt(index);
-                    });
-                    currentUser.tasks.remove(t);
-                    DatabaseHelper.instance.removeTask(t.id);
-                  },
-                ),
-                const SizedBox(width: 2.0),
-                ElevatedButton(
-                  child: const Text('Complete'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                  ),
-                  onPressed: () {
-                    Task t = currentTasks[index];
-                    setState(() {
-                      currentTasks.removeAt(index);
-                    });
-                    DatabaseHelper.instance.completeTask(t.id);
-                    currentUser.points += 5;
-                    currentUser.completedTasks.add(currentUser.tasks[index]);
-                  },
-                ),
-                const SizedBox(width: 16.0),
-              ]),
-            ]);
+              taskCard(currentUser, currentTasks, index)]
+            );
           },
         ),
       ),
