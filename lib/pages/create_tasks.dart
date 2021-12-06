@@ -9,36 +9,6 @@ import 'package:intl/intl.dart';
 CREATES A CARD WIDGET FOR EACH TASK
 just formats the task information into a box
  */
-Widget taskCard(Task task) {
-  DateTime dt = DateTime.parse(task.datetime);
-  String formattedDate =
-      DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
-  return Card(
-    margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
-    child: Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              formattedDate,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.grey[600],
-              ),
-            ),
-            const SizedBox(height: 6.0),
-            Text(
-              task.name,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.grey[800],
-              ),
-            ),
-          ]),
-    ),
-  );
-}
 
 class CreateTasks extends StatefulWidget {
   const CreateTasks({Key? key}) : super(key: key);
@@ -69,47 +39,90 @@ class _CreateTasksState extends State<CreateTasks> {
 
     return Column(children: [
       Expanded(
-        child: ListView.builder(
+        child: ReorderableListView.builder(
           itemCount: currentUser.tasks.length,
           itemBuilder: (context, index) {
-            return Column(children: [
-              taskCard(currentTasks[index]),
-              Row(children: [
-                const Spacer(),
-                ElevatedButton(
-                  child: const Text('Delete'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                  ),
-                  onPressed: () {
-                    Task t = currentTasks[index];
-                    setState(() {
-                      currentTasks.removeAt(index);
-                    });
-                    currentUser.tasks.remove(t);
-                    DatabaseHelper.instance.removeTask(t.id);
-                  },
-                ),
-                const SizedBox(width: 2.0),
-                ElevatedButton(
-                  child: const Text('Complete'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                  ),
-                  onPressed: () {
-                    Task t = currentTasks[index];
-                    setState(() {
-                      currentTasks.removeAt(index);
-                    });
-                    DatabaseHelper.instance.completeTask(t.id);
-                    currentUser.points += 5;
-                    currentUser.completedTasks.add(currentUser.tasks[index]);
-                  },
-                ),
-                const SizedBox(width: 16.0),
-              ]),
-            ]);
+              Task task = currentTasks[index] as Task;
+              DateTime dt = DateTime.parse(task.datetime);
+              String formattedDate =
+              DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
+              return Card(
+
+                key: ValueKey(task.name),
+                margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Text(
+                          formattedDate,
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const SizedBox(height: 6.0),
+                        ListTile(
+                          contentPadding: EdgeInsets.all(25),
+                          title: Text(
+                            task.name,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          trailing: Icon(Icons.drag_handle),
+                          onTap: () {
+                            //TODO: OPEN TO EDIT TASK
+                          },
+                        ),
+                        ButtonBar(
+                          children: <Widget>[
+                            ElevatedButton(
+                              child: const Text('Delete'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                              ),
+                              onPressed: () {
+                                Task t = currentTasks[index];
+                                setState(() {
+                                  currentTasks.removeAt(index);
+                                });
+                                currentUser.tasks.remove(t);
+                                DatabaseHelper.instance.removeTask(t.id);
+                              },
+                            ),
+                            ElevatedButton(
+                              child: const Text('Complete'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.green,
+                              ),
+                              onPressed: () {
+                                Task t = currentTasks[index];
+                                setState(() {
+                                  currentTasks.removeAt(index);
+                                });
+                                DatabaseHelper.instance.completeTask(t.id);
+                                currentUser.points += 5;
+                                currentUser.completedTasks.add(currentUser.tasks[index]);
+                              },
+                            ),],
+                        ),
+                      ] ),
+                ));
+
           },
+
+          //TODO: MAKE SURE TASKS GET REORDERED IN DATABASE
+          onReorder: (int oldIndex, int newIndex) { setState(() {
+          if (oldIndex < newIndex) {
+            newIndex -= 1;
+          }
+
+          final Task item = currentTasks.removeAt(oldIndex);
+
+          //DatabaseHelper.instance.removeTask(item.id);
+          //currentUser.completedTasks.add(currentUser.tasks[newIndex]);
+          currentTasks.insert(newIndex, item);
+        }); },
         ),
       ),
       pressed ? const CreateTasksForm() : const SizedBox(),
