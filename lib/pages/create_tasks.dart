@@ -115,14 +115,15 @@ class _CreateTasksState extends State<CreateTasks> {
 
     return Column(children: [
       Expanded(
-        child: ReorderableListView.builder(
+        child: ListView.builder(
           itemCount: currentUser.tasks.length,
           itemBuilder: (context, index) {
             return Column(children: [
               taskCard(currentUser, currentTasks, index)]
             );
 
-              Task task = currentTasks[index] as Task;
+
+          /*    Task task = currentTasks[index] as Task;
               DateTime dt = DateTime.parse(task.datetime);
               String formattedDate =
               DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
@@ -201,7 +202,8 @@ class _CreateTasksState extends State<CreateTasks> {
           //DatabaseHelper.instance.removeTask(item.id);
           //currentUser.completedTasks.add(currentUser.tasks[newIndex]);
           currentTasks.insert(newIndex, item);
-        }); },
+        });*/
+          },
         ),
       ),
       pressed ? const CreateTasksForm() : const SizedBox(),

@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               unselectedLabelColor: const Color(0xFFF29765),
               indicator: const BoxDecoration(
                   gradient: RadialGradient(
-                      colors: [Colors.white, Colors.blue, Color(0xFFF29765)],
+                      colors: [Colors.white, Color(0xFFF29765), Colors.white],
                       stops: [0.69, 0.7, 0.9],
                       center: Alignment(0, -1),
                       radius: 1.4,
