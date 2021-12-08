@@ -24,9 +24,10 @@ class TimerPgState extends State<TimerPg> {
   );
 
   void _startTimer() {
+    int dur = (_hour*3600)+(_minute*60)+_second+1;
     // Disable the button after it has been pressed
      countDownTimer = CountdownTimer(
-      Duration(seconds: (_hour*3600)+(_minute*60)+_second+1),
+      Duration(seconds: dur),
       const Duration(seconds: 1),
     );
 
@@ -34,7 +35,7 @@ class TimerPgState extends State<TimerPg> {
     sub.onData((duration) {
       if(mounted) {
         setState(() {
-          _current = ((_hour*3600)+(_minute*60)+_second+1) - duration.elapsed.inSeconds;
+          _current = dur - duration.elapsed.inSeconds;
         });
       }
     });
@@ -77,22 +78,26 @@ class TimerPgState extends State<TimerPg> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                NumberPicker(
-                  value: _hour,
-                  minValue: 0,
-                  maxValue: 23,
-                  haptics: true,
-                  itemHeight: 30.0,
-                  selectedTextStyle: const TextStyle(
-                      color: Color(0xFFF29765),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                  onChanged: (value) => setState(() => _hour = value),
+                Visibility(child:
+                  NumberPicker(
+                    value: _hour,
+                    minValue: 0,
+                    maxValue: 23,
+                    haptics: true,
+                    itemHeight: 30.0,
+                    selectedTextStyle: const TextStyle(
+                        color: Color(0xFFF29765),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                    onChanged: (value) => setState(() => _hour = value),
+                  ),
+                  visible: !pressedStart,
                 ),
                 Text('Hours: $_hour'),
                 const SizedBox(height: 30),
               ],
             ),
+            const SizedBox(width: 20),
             //Minute column
             Column(
               children: <Widget>[
@@ -103,22 +108,26 @@ class TimerPgState extends State<TimerPg> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                NumberPicker(
-                  value: _minute,
-                  minValue: 0,
-                  maxValue: 59,
-                  haptics: true,
-                  itemHeight: 30.0,
-                  selectedTextStyle: const TextStyle(
-                      color: Color(0xFFF29765),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                  onChanged: (value) => setState(() => _minute = value),
+                Visibility(child:
+                  NumberPicker(
+                    value: _minute,
+                    minValue: 0,
+                    maxValue: 59,
+                    haptics: true,
+                    itemHeight: 30.0,
+                    selectedTextStyle: const TextStyle(
+                        color: Color(0xFFF29765),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                    onChanged: (value) => setState(() => _minute = value),
+                  ),
+                  visible: !pressedStart,
                 ),
                 Text('Minutes: $_minute'),
                 const SizedBox(height: 30),
               ],
             ),
+            const SizedBox(width: 20),
             //Second column
             Column(
               children: <Widget>[
@@ -129,17 +138,20 @@ class TimerPgState extends State<TimerPg> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                NumberPicker(
-                  value: _second,
-                  minValue: 0,
-                  maxValue: 59,
-                  haptics: true,
-                  itemHeight: 30.0,
-                  selectedTextStyle: const TextStyle(
+                Visibility(child:
+                  NumberPicker(
+                    value: _second,
+                    minValue: 0,
+                    maxValue: 59,
+                    haptics: true,
+                    itemHeight: 30.0,
+                    selectedTextStyle: const TextStyle(
                       color: Color(0xFFF29765),
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
-                  onChanged: (value) => setState(() => _second = value),
+                    onChanged: (value) => setState(() => _second = value),
+                  ),
+                  visible: !pressedStart,
                 ),
                 Text('Seconds: $_second'),
                 const SizedBox(height: 30),
