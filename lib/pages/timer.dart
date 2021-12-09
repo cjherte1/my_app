@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
 import 'package:numberpicker/numberpicker.dart';
 
+import 'NotificationApt.dart';
+
 
 class TimerPg extends StatefulWidget {
   const TimerPg({Key? key}) : super(key: key);
@@ -45,6 +47,9 @@ class TimerPgState extends State<TimerPg> {
       sub.cancel();
       pressedStop = false;
       pressedStart = false;
+      NotificationApi.showNotification(
+            title: 'Times Up!',
+      );
     });
   }
 
