@@ -35,34 +35,42 @@ class AchievementsState extends State<Achievements> {
     ];
     var r = 0 + _random.nextInt(quotes.length - 1 - 0);
 
-    return ListView(children: [
+    return Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/trophy.png"),
+
+          ),
+
+        ),
+        child:
+
       Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 20),
+            const SizedBox(height: 30),
             Center(
-              child: Text('Achievement Points: ' + currentUser.points.toString(),
-                style: TextStyle(
-                  color: Color(0xFFF29765),
+              child: Text('You have finished ' + currentUser.points.toString() + ' tasks!',
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 420),
             Center(
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                   child: Text(quotes[r],
-                    style: TextStyle(
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 16,
+                      fontSize: 15,
                     ),
                   ),
                 ),
             ),
 
       ]),
-    ]);
+    );
   }
 }
