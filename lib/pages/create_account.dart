@@ -61,7 +61,7 @@ class CreateAccountFormState extends State<CreateAccountForm> {
       child: ListView(
         children: [Column(
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 100),
           Container(
             padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextFormField(
