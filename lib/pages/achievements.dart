@@ -13,7 +13,7 @@ class Achievements extends StatefulWidget {
 class AchievementsState extends State<Achievements> {
   @override
   Widget build(BuildContext context) {
-    final _random = new Random();
+    final _random = Random();
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
     var quotes = [
       '"When you have a dream, you’ve got to grab it and never let go. " - Carol Burnett',
