@@ -7,7 +7,6 @@ class Settings extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => SettingsState();
-
 }
 
 class SettingsState extends State<Settings> {
@@ -15,28 +14,19 @@ class SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final currentUser = ModalRoute.of(context)!.settings.arguments as User;
 
-    return ListView(
-      children: [Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            'Welcome ' + currentUser.firstName + '!',
-            style: const TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-            child:  ElevatedButton(
+    return Center(
+      child: SizedBox(
+        width: 200,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: const Color(0xFFF29765),
                 ),
-                child: const Text('Logout',
+                child: const Text(
+                  'Logout',
                   style: TextStyle(
                     color: Color(0xFFFFFFFF),
                     fontWeight: FontWeight.bold,
@@ -45,33 +35,28 @@ class SettingsState extends State<Settings> {
                 onPressed: () {
                   Navigator.popUntil(context, ModalRoute.withName('/'));
                 }),
-          ),
-          Center(
-            child:  ElevatedButton(
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: const Color(0xFFF29765),
                 ),
-                child: const Text('Delete My Account',
+                child: const Text(
+                  'Delete My Account',
                   style: TextStyle(
                     color: Color(0xFFFFFFFF),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 onPressed: () {
-                  if (currentUser.username == 'admin'){
+                  if (currentUser.username == 'admin') {
                     print('Error pop up to not delete admin');
-                  }
-                  else {
-                    DatabaseHelper.instance.removeUser(
-                        currentUser.username);
+                  } else {
+                    DatabaseHelper.instance.removeUser(currentUser.username);
                     Navigator.popUntil(context, ModalRoute.withName('/'));
                   }
                 }),
-          ),
-        ],
+          ],
+        ),
       ),
-    ]
     );
   }
-
 }

@@ -82,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     animationController.repeat(reverse: true);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         appBar: AppBar(
             //StatefulBuilder allows for the AppBar Title to be refreshed
             // without refreshing the whole widget

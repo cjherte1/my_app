@@ -54,7 +54,7 @@ class LoginFormState extends State<LoginForm> {
         children: [
           Column(
             children: [
-              const SizedBox(height: 50),
+              const SizedBox(height: 150),
               Container(
                 padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                 child: TextFormField(
@@ -79,7 +79,7 @@ class LoginFormState extends State<LoginForm> {
                   obscureText: true,
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: const Color(0xFFF29765),
@@ -104,7 +104,7 @@ class LoginFormState extends State<LoginForm> {
                             .getTasksByUser(currentUser.id);
                         currentUser.completedTasks = await DatabaseHelper.instance
                             .getCompletedTasksByUser(currentUser.id);
-                        currentUser.points = currentUser.completedTasks.length * 5;
+                        currentUser.points = currentUser.completedTasks.length;
                         currentUser.taskCount = currentUser.tasks.length;
                         Navigator.pushNamed(context, '/home',
                             arguments: currentUser);
@@ -129,34 +129,34 @@ class LoginFormState extends State<LoginForm> {
                       }
                     }
                   }),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: const Color(0xFFF29765),
-                  ),
-                  child: const Text(
-                    'Clear DB',
-                    style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () {
-                    DatabaseHelper.instance.clearDb();
-                  }),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: const Color(0xFFF29765),
-                  ),
-                  child: const Text(
-                    'Delete DB',
-                    style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () {
-                    DatabaseHelper.instance.deleteDb();
-                  }),
+              // ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //       primary: const Color(0xFFF29765),
+              //     ),
+              //     child: const Text(
+              //       'Clear DB',
+              //       style: TextStyle(
+              //         color: Color(0xFFFFFFFF),
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //     onPressed: () {
+              //       DatabaseHelper.instance.clearDb();
+              //     }),
+              // ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //       primary: const Color(0xFFF29765),
+              //     ),
+              //     child: const Text(
+              //       'Delete DB',
+              //       style: TextStyle(
+              //         color: Color(0xFFFFFFFF),
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //     onPressed: () {
+              //       DatabaseHelper.instance.deleteDb();
+              //     }),
             ],
           ),
         ],

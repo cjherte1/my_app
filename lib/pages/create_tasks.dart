@@ -5,7 +5,6 @@ import '../database_helper.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:intl/intl.dart';
 
-
 /*
 CREATES A CARD WIDGET FOR EACH TASK
 just formats the task information into a box
@@ -40,7 +39,7 @@ class _CreateTasksState extends State<CreateTasks> {
   Widget taskCard(User currentUser, List<Task> currentTasks, int index) {
     DateTime dt = DateTime.parse(currentTasks[index].datetime);
     String formattedDate =
-    DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
+        DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
 
     //enum PopupEnum = {complete, delete};
     //PopupMenuItemBuilder itemBuilder = List<PopupMenuEntry> Function(BuildContext context);
@@ -69,43 +68,41 @@ class _CreateTasksState extends State<CreateTasks> {
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:[Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[Text(
-                            currentTasks[index].name,
-                            style: TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.grey[800])),
-                          const SizedBox(height: 6.0),
-                          Text(currentTasks[index].description),
-                          const SizedBox(height: 6.0),
-                          Text(
-                              formattedDate,
-                              style: TextStyle(
-                                  fontSize: 12.0,
-                                  color: Colors.grey[600])),
-                        ]
-                    ),
+                    children: [
+                      Expanded(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(currentTasks[index].name,
+                                  style: TextStyle(
+                                      fontSize: 18.0, color: Colors.grey[800])),
+                              const SizedBox(height: 6.0),
+                              Text(currentTasks[index].description),
+                              const SizedBox(height: 6.0),
+                              Text(formattedDate,
+                                  style: TextStyle(
+                                      fontSize: 12.0, color: Colors.grey[600])),
+                            ]),
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [IconButton(
-                            color: const Color(0xFFF29765),
-                            onPressed: () {
-                              Task t = currentTasks[index];
-                              setState(() {
-                                currentTasks.removeAt(index);
-                              });
-                              DatabaseHelper.instance.completeTask(t.id);
-                              currentUser.points += 5;
-                              currentUser.completedTasks.add(currentUser.tasks[index]);
-                            },
-                            icon: const Icon(Icons.check))],
+                        children: [
+                          IconButton(
+                              color: const Color(0xFFF29765),
+                              onPressed: () {
+                                Task t = currentTasks[index];
+                                setState(() {
+                                  currentTasks.removeAt(index);
+                                });
+                                DatabaseHelper.instance.completeTask(t.id);
+                                currentUser.points += 1;
+                                currentUser.completedTasks
+                                    .add(currentUser.tasks[index]);
+                              },
+                              icon: const Icon(Icons.check))
+                        ],
                       )
-                    ]
-                )
-            )
-        )
-    );
+                    ]))));
   }
 
   @override
@@ -118,12 +115,10 @@ class _CreateTasksState extends State<CreateTasks> {
         child: ListView.builder(
           itemCount: currentUser.tasks.length,
           itemBuilder: (context, index) {
-            return Column(children: [
-              taskCard(currentUser, currentTasks, index)]
-            );
+            return Column(
+                children: [taskCard(currentUser, currentTasks, index)]);
 
-
-          /*    Task task = currentTasks[index] as Task;
+            /*    Task task = currentTasks[index] as Task;
               DateTime dt = DateTime.parse(task.datetime);
               String formattedDate =
               DateFormat('MMMM d, yyyy - h:mm a').format(dt).toString();
@@ -295,7 +290,7 @@ class CreateTasksFormState extends State<CreateTasksForm> {
               validator: datetimeValidator.validate,
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 220),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: const Color(0xFFF29765),
@@ -310,7 +305,6 @@ class CreateTasksFormState extends State<CreateTasksForm> {
               ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-
                   await DatabaseHelper.instance.addTask(
                     //I HAVE NO IDEA HOW TO CALL THE FUNCTION FROM THE DATABASE HELPER LOL PLS HELP
                     nameController.text, datetimeController.text,
