@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     const List<Tab> tabs = <Tab>[
       Tab(text: "Tasks"),
-      Tab(text: "Reminders"),
+      // TODO implement Tab(text: "Reminders"),
       Tab(text: "Timer"), //, icon: Icon(Icons.timer)
       Tab(text: "Achievements"),
       Tab(text: "Settings") //, icon: Icon(Icons.settings)
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 controller: tabController,
                 children: const <Widget>[
                   CreateTasks(),
-                  Reminders(),
+                  // TODO implement Reminders(),
                   TimerPg(),
                   Achievements(),
                   Settings()])
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               unselectedLabelColor: const Color(0xFFF29765),
               indicator: const BoxDecoration(
                   gradient: RadialGradient(
-                      colors: [Colors.white, Color(0xFFF29765), Colors.white],
+                      colors: [Colors.white, Colors.white, Color(0xFFF29765)],
                       stops: [0.69, 0.7, 0.9],
                       center: Alignment(0, -1),
                       radius: 1.4,
