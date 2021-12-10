@@ -44,12 +44,12 @@ class TimerPgState extends State<TimerPg> {
 
     sub.onDone(() {
       print("Done");
-      NotificationApi.showNotification(
-        title: 'Times Up!',
-      );
       sub.cancel();
       pressedStop = false;
       pressedStart = false;
+      NotificationApi.showNotification(
+        title: 'Times Up!',
+      );
     });
   }
 
