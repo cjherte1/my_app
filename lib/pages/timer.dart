@@ -13,7 +13,11 @@ class TimerPg extends StatefulWidget {
 
 }
 
-class TimerPgState extends State<TimerPg> {
+class TimerPgState extends State<TimerPg> with
+    AutomaticKeepAliveClientMixin<TimerPg> {
+  @override
+  bool get wantKeepAlive => true;
+
   int _hour = 0;
   int _minute = 0;
   int _second = 0;
