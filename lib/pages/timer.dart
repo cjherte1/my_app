@@ -52,7 +52,7 @@ class TimerPgState extends State<TimerPg> with
       pressedStop = false;
       pressedStart = false;
       NotificationApi.showNotification(
-        title: 'Times Up!',
+        title: "Time's Up!",
       );
     });
   }
