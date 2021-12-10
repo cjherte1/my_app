@@ -33,7 +33,7 @@ class AchievementsState extends State<Achievements> {
       '"Success is not final, failure is not fatal: it is the courage to continue that counts." - Winston S. Churchill',
       '"Whatever you are, be a good one." - Abraham Lincoln',
     ];
-    var r = 0 + _random.nextInt(quotes.length - 1 - 0);
+    var r = _random.nextInt(quotes.length - 1 - 0);
 
     return Container(
         decoration: const BoxDecoration(
@@ -49,14 +49,15 @@ class AchievementsState extends State<Achievements> {
           children: <Widget>[
             const SizedBox(height: 30),
             Center(
-              child: Text('You have finished ' + currentUser.points.toString() + ' tasks!',
+              child: Text('You have finished ' + currentUser.points.toString() + ' task(s)!'
+                  '\nYou have ' + (currentUser.points*5).toString() + ' points.',
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 420),
+            const SizedBox(height: 475),
             Center(
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
