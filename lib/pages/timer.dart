@@ -13,7 +13,11 @@ class TimerPg extends StatefulWidget {
 
 }
 
-class TimerPgState extends State<TimerPg> {
+class TimerPgState extends State<TimerPg> with
+    AutomaticKeepAliveClientMixin<TimerPg> {
+  @override
+  bool get wantKeepAlive => true;
+
   int _hour = 0;
   int _minute = 0;
   int _second = 0;
@@ -48,7 +52,7 @@ class TimerPgState extends State<TimerPg> {
       pressedStop = false;
       pressedStart = false;
       NotificationApi.showNotification(
-            title: 'Times Up!',
+        title: 'Times Up!',
       );
     });
   }
@@ -64,6 +68,10 @@ class TimerPgState extends State<TimerPg> {
 
   @override
   Widget build(BuildContext context) {
+    var _curHr = (_current/3600).toInt();
+    var _rem = (_current - (_curHr*3600).toInt());
+    var _curMin = (_rem/60).toInt();
+    var _curSec = (_rem - (_curMin*60)).toInt();
 
     return ListView(
       children: [
@@ -202,7 +210,7 @@ class TimerPgState extends State<TimerPg> {
               visible: pressedStart,
             ),
             const SizedBox(height: 10),
-            Text("$_current",
+            Text("$_curHr:$_curMin:$_curSec",
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
